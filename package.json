@@ -1,0 +1,33 @@
+{
+  "name": "ionic2-tooltips",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "scripts": {
+    "build": "rm -rf aot dist && ngc",
+    "build:dev": "npm run build && cp -r dist src ../ionic2-tooltips-example/node_modules/ionic2-tooltips/"
+  },
+  "author": "Ibby Hadeed <i.hadeed@zyra.ca>",
+  "license": "MIT",
+  "devDependencies": {
+    "@angular/common": "2.4.8",
+    "@angular/compiler": "2.4.8",
+    "@angular/compiler-cli": "2.4.8",
+    "@angular/core": "2.4.8",
+    "@angular/forms": "^2.4.8",
+    "@angular/http": "2.4.8",
+    "@angular/platform-browser": "2.4.8",
+    "@angular/platform-browser-dynamic": "2.4.8",
+    "@angular/platform-server": "2.4.8",
+    "ionic-angular": "2.2.0",
+    "ionicons": "3.0.0",
+    "rxjs": "5.0.1",
+    "sw-toolbox": "3.4.0",
+    "typescript": "2.0.9",
+    "zone.js": "0.7.2"
+  },
+  "peerDependencies": {
+    "ionic-angular": "^2.2.0"
+  }
+}
