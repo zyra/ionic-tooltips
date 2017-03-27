@@ -3,7 +3,7 @@ import {
   ViewContainerRef, ComponentRef
 } from '@angular/core';
 import { Platform } from 'ionic-angular';
-import { TooltipBoxComponent } from '../tooltip-box/tooltip-box';
+import { TooltipBox } from './tooltip-box';
 
 @Directive({
   selector: '[tooltip]',
@@ -24,7 +24,7 @@ export class Tooltip {
   get arrow(): boolean { return this._arrow; }
 
   private _arrow: boolean = false;
-  private tooltipElement: ComponentRef<TooltipBoxComponent>;
+  private tooltipElement: ComponentRef<TooltipBox>;
   private tooltipTimeout: any;
   private canShow: boolean = true;
 
@@ -50,7 +50,7 @@ export class Tooltip {
 
     this.createTooltipComponent();
 
-    const tooltipComponent: TooltipBoxComponent = this.tooltipElement.instance;
+    const tooltipComponent: TooltipBox = this.tooltipElement.instance;
 
     tooltipComponent.text = this.tooltip;
     tooltipComponent.init.then(() => {
@@ -85,7 +85,7 @@ export class Tooltip {
   private createTooltipComponent() {
     let
       viewport: ViewContainerRef = (<any>this.appRef.components[0])._component._viewport,
-      componentFactory = this._componentFactoryResolver.resolveComponentFactory(TooltipBoxComponent);
+      componentFactory = this._componentFactoryResolver.resolveComponentFactory(TooltipBox);
 
     this.tooltipElement = viewport.createComponent(componentFactory);
   }
