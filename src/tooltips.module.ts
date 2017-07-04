@@ -1,14 +1,23 @@
 import { NgModule } from '@angular/core';
 import { IonicModule } from 'ionic-angular';
-import { Tooltip } from './components/tooltip';
-import { TooltipBox } from './components/tooltip-box';
+import { Tooltip } from './tooltip.directive';
+import { TooltipBox } from './tooltip-box.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
+  entryComponents: [
+    TooltipBox
+  ],
     declarations: [
         Tooltip,
         TooltipBox,
     ],
-    imports: [ IonicModule ],
-    exports: [ Tooltip ]
+    imports: [
+      IonicModule,
+      BrowserAnimationsModule
+    ],
+    exports: [
+      Tooltip
+    ]
 })
 export class TooltipsModule { }
