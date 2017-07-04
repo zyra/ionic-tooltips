@@ -2,3 +2,4 @@ node_modules
 dist
 aot
 .idea
+.DS_STORE
