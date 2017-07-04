@@ -14,20 +14,41 @@ import { TooltipBox } from './tooltip-box.component';
 })
 export class Tooltip {
 
+  /**
+   * Tooltip text
+   */
   @Input() tooltip: string;
 
+  /**
+   * Ddd this attribute or set it's value to true to specify that the tooltip belongs to a nav button. Defaults to `false`
+   * @param val {boolean}
+   */
   @Input()
   set tooltipNav(val: boolean) {
     this._tooltipNav = typeof val !== 'boolean' || val != false;
   }
   get tooltipNav(): boolean { return this._tooltipNav; }
 
+  /**
+   * Specifies the vertical position of the tooltip. Can be either `top` or `bottom`.
+   */
   @Input() tooltipPositionV: string;
 
+  /**
+   * Specifies the horizontal position of the tooltip. Can be either `right` or `left`.
+   */
   @Input() tooltipPositionH: string;
 
+  /**
+   * The event to show the tooltip on. Can be either `click` or `press`. Defaults to `press`.
+   * @type {string}
+   */
   @Input() tooltipEvent: 'press' | 'click' = 'click';
 
+  /**
+   * Add this attribute or set it's value to true to show an arrow attached to the tooltip. Defaults to `false`.
+   * @param val
+   */
   @Input()
   set arrow(val: boolean) {
     this._arrow = typeof val !== 'boolean' || val != false;
