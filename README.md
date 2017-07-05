@@ -14,9 +14,9 @@ The module can be used to display tooltips for any element in your app. It also 
 
 Here's a quick example to show a tooltip below a button:
 ```html
-<!-- tooltipPositionV specifies where the tooltip should be displayed vertically, can be either top or bottom -->
+<!-- positionV specifies where the tooltip should be displayed vertically, can be either top or bottom -->
 <!-- arrow tells the tooltip directive to show an arrow above the tooltip box -->
-<button ion-button [tooltip]="I'm a tooltip below a button" tooltipPositionV="bottom" arrow>
+<button ion-button [tooltip]="I'm a tooltip below a button" positionV="bottom" arrow>
   Press me to see a tooltip
 </button>
 ```
@@ -27,8 +27,8 @@ And here's another example to show a tooltip below a nav button:
   <ion-navbar>
     <ion-title>Page title</ion-title>
     <ion-buttons end>
-      <!-- tooltipNav tells the tooltip directive that this is a nav button -->
-      <ion-button icon-only [tooltip]="call" tooltipNav>
+      <!-- navTooltip tells the tooltip directive that this is a nav button -->
+      <ion-button icon-only [tooltip]="Call" navTooltip>
         <ion-icon name="call"></ion-icon>
       </ion-button>
     </ion-buttons>
