@@ -15,10 +15,21 @@ import { TooltipBox } from './tooltip-box.component';
 export class Tooltip {
 
   @Input() tooltip: string;
-  @Input() navTooltip: boolean = false;
+
   @Input() positionV: string;
+
   @Input() positionH: string;
+
   @Input() event: 'press' | 'click' = 'click';
+
+  @Input()
+  set navTooltip(val: boolean) {
+    this._navTooltip = typeof val !== 'boolean' || val != false;
+  }
+  get navTooltip(): boolean {
+    return this._navTooltip;
+  }
+
   @Input()
   set arrow(val: boolean) {
     this._arrow = typeof val !== 'boolean' || val != false;
@@ -28,6 +39,7 @@ export class Tooltip {
   @Input() duration: number = 3000;
 
   private _arrow: boolean = false;
+  private _navTooltip: boolean = false;
   private tooltipElement: ComponentRef<TooltipBox>;
   private tooltipTimeout: any;
   private canShow: boolean = true;
