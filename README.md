@@ -11,7 +11,8 @@ This module is designed to work with `ionic-angular@^3.5.0` but it should work w
 
 ## Demo
 Below is a gif showing the module in action, you can also clone the example project here: https://github.com/zyra/ionic-tooltips-example
-<!-- TODO add gif here -->
+
+![Ionic Tooltips Demo](https://github.com/zyra/ionic-tooltips-example/blob/master/ionic-tooltips.gif?raw=true)
 
 ## Examples
 
