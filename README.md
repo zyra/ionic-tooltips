@@ -69,13 +69,13 @@ The `tooltip` directive takes a string, which will be used as the tooltip text. 
 (boolean) add this attribute or set it's value to true to specify that the tooltip belongs to a nav button. Defaults to `false`.
 
 #### `positionV`
-(string) specifies the vertical position of the tooltip. Can be either `top` or `bottom`.
+(string) specifies the vertical position of the tooltip. Can be either `'top'` or `'bottom'`.
 
 #### `positionH`
-(string) specifies the horizontal position of the tooltip. Can be either `right` or `left`.
+(string) specifies the horizontal position of the tooltip. Can be either `'right'` or `'left'`.
 
 #### `event`
-(string) the event to show the tooltip on. Can be either `click` or `press`. Defaults to `press`.
+(string) the event to show the tooltip on. Can be either `'click'` or `'press'`. Defaults to `'press'`.
 
 #### `arrow`
 (boolean) add this attribute or set it's value to true to show an arrow attached to the tooltip. Defaults to `false`.
