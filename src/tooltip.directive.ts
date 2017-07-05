@@ -8,26 +8,26 @@ import { TooltipBox } from './tooltip-box.component';
 @Directive({
   selector: '[tooltip]',
   host: {
-    '(press)': 'tooltipEvent === "press" && trigger()',
-    '(click)': 'tooltipEvent === "click" && trigger()'
+    '(press)': 'event === "press" && trigger()',
+    '(click)': 'event === "click" && trigger()'
   }
 })
 export class Tooltip {
 
   @Input() tooltip: string;
-  @Input() tooltipNav: boolean = false;
-  @Input() tooltipPositionV: string;
-  @Input() tooltipPositionH: string;
-  @Input() tooltipEvent: 'press' | 'click' = 'click';
+  @Input() navTooltip: boolean = false;
+  @Input() positionV: string;
+  @Input() positionX: string;
+  @Input() event: 'press' | 'click' = 'click';
   @Input()
-  set tooltipArrow(val: boolean) {
-    this._tooltipArrow = typeof val !== 'boolean' || val != false;
+  set arrow(val: boolean) {
+    this._arrow = typeof val !== 'boolean' || val != false;
   }
-  get tooltipArrow(): boolean { return this._tooltipArrow; }
+  get arrow(): boolean { return this._arrow; }
 
   @Input() duration: number = 3000;
 
-  private _tooltipArrow: boolean = false;
+  private _arrow: boolean = false;
   private tooltipElement: ComponentRef<TooltipBox>;
   private tooltipTimeout: any;
   private canShow: boolean = true;
@@ -73,13 +73,13 @@ export class Tooltip {
 
       tooltipComponent.fadeState = 'visible';
 
-      if (this.tooltipArrow) {
+      if (this.arrow) {
         let arrowPosition;
-        if (this.tooltipPositionV === 'top') {
+        if (this.positionV === 'top') {
           arrowPosition = 'bottom';
-        } else if (this.tooltipPositionV === 'bottom') {
+        } else if (this.positionV === 'bottom') {
           arrowPosition = 'top';
-        } else if (this.tooltipPositionH === 'left') {
+        } else if (this.positionX === 'left') {
           arrowPosition = 'right';
         } else {
           arrowPosition = 'left';
@@ -109,26 +109,26 @@ export class Tooltip {
 
     let positionLeft: number, positionTop: number, spacing: number = 10;
 
-    if (this.tooltipNav) {
-      this.tooltipPositionV = 'bottom';
-      this.tooltipArrow = false;
+    if (this.navTooltip) {
+      this.positionV = 'bottom';
+      this.arrow = false;
       spacing = 20;
     }
 
 
-    if (this.tooltipPositionH === 'right') {
+    if (this.positionX === 'right') {
       positionLeft = rect.right + spacing;
-    } else if (this.tooltipPositionH === 'left') {
+    } else if (this.positionX === 'left') {
       positionLeft = rect.left - spacing - tooltipNativeElement.offsetWidth;
-    } else if (this.tooltipNav) {
+    } else if (this.navTooltip) {
       positionLeft = rect.left + el.offsetWidth / 2
     } else {
       positionLeft = rect.left;
     }
 
-    if (this.tooltipPositionV === 'top') {
+    if (this.positionV === 'top') {
       positionTop = rect.top - spacing - tooltipNativeElement.offsetHeight;
-    } else if(this.tooltipPositionV === 'bottom') {
+    } else if(this.positionV === 'bottom') {
       positionTop = rect.bottom + spacing;
     } else {
       positionTop = (rect.top + el.offsetHeight / 2) - tooltipNativeElement.offsetHeight / 2;

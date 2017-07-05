@@ -31,10 +31,10 @@ import { animate, trigger, style, state, transition } from '@angular/animations'
               height: 0;
           }
     `,
-    ':host.has-tooltipArrow.tooltipArrow-top:before { border-bottom: 5px solid rgba(0,0,0,0.8); top: -10px; }',
-    ':host.has-tooltipArrow.tooltipArrow-bottom:before { border-top: 5px solid rgba(0,0,0,0.8); bottom: -10px; }',
-    ':host.has-tooltipArrow.tooltipArrow-right:before { border-left: 5px solid rgba(0,0,0,0.8); right: -10px; }',
-    ':host.has-tooltipArrow.tooltipArrow-left:before { border-right: 5px solid rgba(0,0,0,0.8); left: -10px; }'
+    ':host.has-arrow.arrow-top:before { border-bottom: 5px solid rgba(0,0,0,0.8); top: -10px; }',
+    ':host.has-arrow.arrow-bottom:before { border-top: 5px solid rgba(0,0,0,0.8); bottom: -10px; }',
+    ':host.has-arrow.arrow-right:before { border-left: 5px solid rgba(0,0,0,0.8); right: -10px; }',
+    ':host.has-arrow.arrow-left:before { border-right: 5px solid rgba(0,0,0,0.8); left: -10px; }'
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -47,8 +47,8 @@ export class TooltipBox implements AfterViewInit {
 
   @Input()
   set arrow(side: string) {
-    this.rnd.setElementClass(this.getNativeElement(), 'has-tooltipArrow', true);
-    this.rnd.setElementClass(this.getNativeElement(), 'tooltipArrow-' + side, true);
+    this.rnd.setElementClass(this.getNativeElement(), 'has-arrow', true);
+    this.rnd.setElementClass(this.getNativeElement(), 'arrow-' + side, true);
   }
 
   @Input()
