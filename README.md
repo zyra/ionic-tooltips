@@ -36,6 +36,31 @@ And here's another example to show a tooltip below a nav button:
 </ion-header>
 ```
 
+## Installation
+1. Make sure you have `@angular/animations` installed. If you don't have it, run the following command to install it:
+```shell
+npm i --save --save-exact @angular/animations@4.1.3
+```
+2. Install this module by running the following command:
+```shell
+npm i --save ionic-tooltips
+```
+3. Import `TooltipsModule` in your `@NgModule`. If you are using lazy module loading in your app, you might need to import it more than once.
+```ts
+import { TooltipsModule } from 'ionic-tooltips';
+
+@NgModule({
+   ...
+   imports: [
+      ...
+      TooltipsModule
+   ]
+})
+export class MyModule { ... }
+```
+
+Now you're ready to use this module. See information below for usage.
+
 ## Usage
 
 The `tooltip` directive takes a string, which will be used as the tooltip text. When using the `tooltip` directive, you can also use the following inputs:
