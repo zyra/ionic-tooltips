@@ -80,3 +80,5 @@ The `tooltip` directive takes a string, which will be used as the tooltip text. 
 #### `arrow`
 (boolean) add this attribute or set it's value to true to show an arrow attached to the tooltip. Defaults to `false`.
 
+#### `duration`
+(number) number of milliseconds to show the tooltip for. Defaults to `3000`.
