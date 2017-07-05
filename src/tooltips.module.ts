@@ -20,4 +20,4 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
       Tooltip
     ]
 })
-export class TooltipsModule { }
+export class TooltipsModule {}
