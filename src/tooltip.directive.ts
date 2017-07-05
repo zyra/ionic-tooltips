@@ -8,94 +8,72 @@ import { TooltipBox } from './tooltip-box.component';
 @Directive({
   selector: '[tooltip]',
   host: {
-    '(press)': 'tooltipEvent === "press" && onPress()',
-    '(click)': 'tooltipEvent === "click" && onPress()'
+    '(press)': 'tooltipEvent === "press" && trigger()',
+    '(click)': 'tooltipEvent === "click" && trigger()'
   }
 })
 export class Tooltip {
 
-  /**
-   * Tooltip text
-   */
   @Input() tooltip: string;
-
-  /**
-   * Ddd this attribute or set it's value to true to specify that the tooltip belongs to a nav button. Defaults to `false`
-   * @param val {boolean}
-   */
-  @Input()
-  set tooltipNav(val: boolean) {
-    this._tooltipNav = typeof val !== 'boolean' || val != false;
-  }
-  get tooltipNav(): boolean { return this._tooltipNav; }
-
-  /**
-   * Specifies the vertical position of the tooltip. Can be either `top` or `bottom`.
-   */
+  @Input() tooltipNav: boolean = false;
   @Input() tooltipPositionV: string;
-
-  /**
-   * Specifies the horizontal position of the tooltip. Can be either `right` or `left`.
-   */
   @Input() tooltipPositionH: string;
-
-  /**
-   * The event to show the tooltip on. Can be either `click` or `press`. Defaults to `press`.
-   * @type {string}
-   */
   @Input() tooltipEvent: 'press' | 'click' = 'click';
-
-  /**
-   * Add this attribute or set it's value to true to show an arrow attached to the tooltip. Defaults to `false`.
-   * @param val
-   */
   @Input()
-  set arrow(val: boolean) {
-    this._arrow = typeof val !== 'boolean' || val != false;
+  set tooltipArrow(val: boolean) {
+    this._tooltipArrow = typeof val !== 'boolean' || val != false;
   }
-  get arrow(): boolean { return this._arrow; }
+  get tooltipArrow(): boolean { return this._tooltipArrow; }
 
-  private _arrow: boolean = false;
-  private _tooltipNav: boolean = false;
+  @Input() duration: number = 3000;
+
+  private _tooltipArrow: boolean = false;
   private tooltipElement: ComponentRef<TooltipBox>;
   private tooltipTimeout: any;
   private canShow: boolean = true;
 
   constructor(
-    private el: ElementRef
-    , private appRef: ApplicationRef
-    , private platform: Platform
-    , private _componentFactoryResolver: ComponentFactoryResolver
+      private el: ElementRef
+      , private appRef: ApplicationRef
+      , private platform: Platform
+      , private _componentFactoryResolver: ComponentFactoryResolver
   ) {}
 
-  onPress() {
+  /**
+   * Handles the click/press event and shows a tooltip.
+   * If a tooltip already exists, it will just reset it's timer.
+   */
+  trigger() {
     if (!this.canShow) return;
 
     if (this.tooltipElement) {
-      this.resetTimer();
+      this._resetTimer();
     } else {
       this.showTooltip();
     }
   }
 
 
+  /**
+   * Creates a new tooltip component and adjusts it's properties to show properly.
+   */
   showTooltip() {
 
-    this.createTooltipComponent();
+    this._createTooltipComponent();
 
     const tooltipComponent: TooltipBox = this.tooltipElement.instance;
 
     tooltipComponent.text = this.tooltip;
     tooltipComponent.init.then(() => {
 
-      const tooltipPosition = this.getTooltipPosition();
+      const tooltipPosition = this._getTooltipPosition();
 
       tooltipComponent.posLeft = tooltipPosition.left;
       tooltipComponent.posTop = tooltipPosition.top;
 
       tooltipComponent.fadeState = 'visible';
 
-      if (this.arrow) {
+      if (this.tooltipArrow) {
         let arrowPosition;
         if (this.tooltipPositionV === 'top') {
           arrowPosition = 'bottom';
@@ -109,31 +87,31 @@ export class Tooltip {
         tooltipComponent.arrow = arrowPosition;
       }
 
-      this.tooltipTimeout = setTimeout(this.removeTooltip.bind(this), 3000);
+      this.tooltipTimeout = setTimeout(this._removeTooltip.bind(this), this.duration);
 
     });
 
   }
 
-  private createTooltipComponent() {
+  private _createTooltipComponent() {
     let
-      viewport: ViewContainerRef = (<any>this.appRef.components[0])._component._viewport,
-      componentFactory = this._componentFactoryResolver.resolveComponentFactory(TooltipBox);
+        viewport: ViewContainerRef = (<any>this.appRef.components[0])._component._viewport,
+        componentFactory = this._componentFactoryResolver.resolveComponentFactory(TooltipBox);
 
     this.tooltipElement = viewport.createComponent(componentFactory);
   }
 
-  private getTooltipPosition() {
+  private _getTooltipPosition() {
     const
-      tooltipNativeElement: HTMLElement = this.tooltipElement.instance.getNativeElement(),
-      el: HTMLElement = this.el.nativeElement,
-      rect: ClientRect = el.getBoundingClientRect();
+        tooltipNativeElement: HTMLElement = this.tooltipElement.instance.getNativeElement(),
+        el: HTMLElement = this.el.nativeElement,
+        rect: ClientRect = el.getBoundingClientRect();
 
     let positionLeft: number, positionTop: number, spacing: number = 10;
 
     if (this.tooltipNav) {
       this.tooltipPositionV = 'bottom';
-      this.arrow = false;
+      this.tooltipArrow = false;
       spacing = 20;
     }
 
@@ -168,7 +146,7 @@ export class Tooltip {
     };
   }
 
-  private removeTooltip() {
+  private _removeTooltip() {
     if (!this.tooltipElement) {
       this.tooltipElement = undefined;
       this.tooltipTimeout = undefined;
@@ -179,6 +157,7 @@ export class Tooltip {
 
     this.canShow = false;
 
+    // wait for animation to finish then clear everything out
     setTimeout(() => {
       this.tooltipElement.destroy();
       this.tooltipElement = undefined;
@@ -187,9 +166,9 @@ export class Tooltip {
     }, 300);
   }
 
-  private resetTimer() {
+  private _resetTimer() {
     clearTimeout(this.tooltipTimeout);
-    this.tooltipTimeout = setTimeout(this.removeTooltip.bind(this), 3000);
+    this.tooltipTimeout = setTimeout(this._removeTooltip.bind(this), this.duration);
   }
 
 }
