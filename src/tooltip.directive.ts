@@ -17,7 +17,7 @@ export class Tooltip {
   @Input() tooltip: string;
   @Input() navTooltip: boolean = false;
   @Input() positionV: string;
-  @Input() positionX: string;
+  @Input() positionH: string;
   @Input() event: 'press' | 'click' = 'click';
   @Input()
   set arrow(val: boolean) {
@@ -79,7 +79,7 @@ export class Tooltip {
           arrowPosition = 'bottom';
         } else if (this.positionV === 'bottom') {
           arrowPosition = 'top';
-        } else if (this.positionX === 'left') {
+        } else if (this.positionH === 'left') {
           arrowPosition = 'right';
         } else {
           arrowPosition = 'left';
@@ -116,9 +116,9 @@ export class Tooltip {
     }
 
 
-    if (this.positionX === 'right') {
+    if (this.positionH === 'right') {
       positionLeft = rect.right + spacing;
-    } else if (this.positionX === 'left') {
+    } else if (this.positionH === 'left') {
       positionLeft = rect.left - spacing - tooltipNativeElement.offsetWidth;
     } else if (this.navTooltip) {
       positionLeft = rect.left + el.offsetWidth / 2
