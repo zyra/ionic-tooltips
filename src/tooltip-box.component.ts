@@ -1,174 +1,82 @@
-import {
-  Directive, ElementRef, Input, ApplicationRef, ComponentFactoryResolver,
-  ViewContainerRef, ComponentRef
-} from '@angular/core';
-import { Platform } from 'ionic-angular';
-import { TooltipBox } from './tooltip-box.component';
+import { Component, Input, ElementRef, Renderer, HostBinding, ChangeDetectionStrategy, AfterViewInit } from '@angular/core';
+import { animate, trigger, style, state, transition } from '@angular/animations';
 
-@Directive({
-  selector: '[tooltip]',
-  host: {
-    '(press)': 'tooltipEvent === "press" && trigger()',
-    '(click)': 'tooltipEvent === "click" && trigger()'
-  }
+@Component({
+  selector: 'tooltip-box',
+  template: '{{ text }}',
+  animations: [
+    trigger('fade', [
+      state('visible', style({ opacity: 1})),
+      state('invisible', style({ opacity: 0 })),
+      transition('visible <=> invisible', animate('300ms linear'))
+    ])
+  ],
+  styles: [
+      `
+          :host {
+              background-color: rgba(0,0,0,0.8);
+              color: white;
+              display: inline-block;
+              position: fixed;
+              padding: 15px 25px;
+              font-size: 15px;
+          }
+    `,
+      `
+          :host.has-arrow:before {
+              content: '';
+              border: 5px solid transparent;
+              position: absolute;
+              width: 0;
+              height: 0;
+          }
+    `,
+    ':host.has-tooltipArrow.tooltipArrow-top:before { border-bottom: 5px solid rgba(0,0,0,0.8); top: -10px; }',
+    ':host.has-tooltipArrow.tooltipArrow-bottom:before { border-top: 5px solid rgba(0,0,0,0.8); bottom: -10px; }',
+    ':host.has-tooltipArrow.tooltipArrow-right:before { border-left: 5px solid rgba(0,0,0,0.8); right: -10px; }',
+    ':host.has-tooltipArrow.tooltipArrow-left:before { border-right: 5px solid rgba(0,0,0,0.8); left: -10px; }'
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class Tooltip {
+export class TooltipBox implements AfterViewInit {
 
-  @Input() tooltip: string;
-  @Input() tooltipNav: boolean = false;
-  @Input() tooltipPositionV: string;
-  @Input() tooltipPositionH: string;
-  @Input() tooltipEvent: 'press' | 'click' = 'click';
+  @HostBinding('@fade') fadeState: string = 'invisible';
+
   @Input()
-  set tooltipArrow(val: boolean) {
-    this._tooltipArrow = typeof val !== 'boolean' || val != false;
-  }
-  get tooltipArrow(): boolean { return this._tooltipArrow; }
+  text: string;
 
-  @Input() duration: number = 3000;
-
-  private _tooltipArrow: boolean = false;
-  private tooltipElement: ComponentRef<TooltipBox>;
-  private tooltipTimeout: any;
-  private canShow: boolean = true;
-
-  constructor(
-      private el: ElementRef
-      , private appRef: ApplicationRef
-      , private platform: Platform
-      , private _componentFactoryResolver: ComponentFactoryResolver
-  ) {}
-
-  /**
-   * Handles the click/press event and shows a tooltip.
-   * If a tooltip already exists, it will just reset it's timer.
-   */
-  trigger() {
-    if (!this.canShow) return;
-
-    if (this.tooltipElement) {
-      this._resetTimer();
-    } else {
-      this.showTooltip();
-    }
+  @Input()
+  set arrow(side: string) {
+    this.rnd.setElementClass(this.getNativeElement(), 'has-tooltipArrow', true);
+    this.rnd.setElementClass(this.getNativeElement(), 'tooltipArrow-' + side, true);
   }
 
+  @Input()
+  set posTop(val: number) {
+    this.rnd.setElementStyle(this.getNativeElement(), 'top', val + 'px');
+  }
 
-  /**
-   * Creates a new tooltip component and adjusts it's properties to show properly.
-   */
-  showTooltip() {
+  @Input()
+  set posLeft(val: number) {
+    this.rnd.setElementStyle(this.getNativeElement(), 'left', val + 'px');
+  }
 
-    this._createTooltipComponent();
+  getNativeElement(): HTMLElement {
+    return this.elementRef.nativeElement;
+  }
 
-    const tooltipComponent: TooltipBox = this.tooltipElement.instance;
+  init: Promise<void>;
 
-    tooltipComponent.text = this.tooltip;
-    tooltipComponent.init.then(() => {
+  private initResolve: Function;
 
-      const tooltipPosition = this._getTooltipPosition();
-
-      tooltipComponent.posLeft = tooltipPosition.left;
-      tooltipComponent.posTop = tooltipPosition.top;
-
-      tooltipComponent.fadeState = 'visible';
-
-      if (this.tooltipArrow) {
-        let arrowPosition;
-        if (this.tooltipPositionV === 'top') {
-          arrowPosition = 'bottom';
-        } else if (this.tooltipPositionV === 'bottom') {
-          arrowPosition = 'top';
-        } else if (this.tooltipPositionH === 'left') {
-          arrowPosition = 'right';
-        } else {
-          arrowPosition = 'left';
-        }
-        tooltipComponent.arrow = arrowPosition;
-      }
-
-      this.tooltipTimeout = setTimeout(this._removeTooltip.bind(this), this.duration);
-
+  constructor(public elementRef: ElementRef, private rnd: Renderer) {
+    this.init = new Promise<void>(resolve => {
+      this.initResolve = resolve;
     });
-
   }
 
-  private _createTooltipComponent() {
-    let
-        viewport: ViewContainerRef = (<any>this.appRef.components[0])._component._viewport,
-        componentFactory = this._componentFactoryResolver.resolveComponentFactory(TooltipBox);
-
-    this.tooltipElement = viewport.createComponent(componentFactory);
-  }
-
-  private _getTooltipPosition() {
-    const
-        tooltipNativeElement: HTMLElement = this.tooltipElement.instance.getNativeElement(),
-        el: HTMLElement = this.el.nativeElement,
-        rect: ClientRect = el.getBoundingClientRect();
-
-    let positionLeft: number, positionTop: number, spacing: number = 10;
-
-    if (this.tooltipNav) {
-      this.tooltipPositionV = 'bottom';
-      this.tooltipArrow = false;
-      spacing = 20;
-    }
-
-
-    if (this.tooltipPositionH === 'right') {
-      positionLeft = rect.right + spacing;
-    } else if (this.tooltipPositionH === 'left') {
-      positionLeft = rect.left - spacing - tooltipNativeElement.offsetWidth;
-    } else if (this.tooltipNav) {
-      positionLeft = rect.left + el.offsetWidth / 2
-    } else {
-      positionLeft = rect.left;
-    }
-
-    if (this.tooltipPositionV === 'top') {
-      positionTop = rect.top - spacing - tooltipNativeElement.offsetHeight;
-    } else if(this.tooltipPositionV === 'bottom') {
-      positionTop = rect.bottom + spacing;
-    } else {
-      positionTop = (rect.top + el.offsetHeight / 2) - tooltipNativeElement.offsetHeight / 2;
-    }
-
-    if (positionLeft + tooltipNativeElement.offsetWidth + spacing > this.platform.width()) {
-      positionLeft = this.platform.width() - tooltipNativeElement.offsetWidth - spacing;
-    } else if (positionLeft + tooltipNativeElement.offsetWidth - spacing < 0) {
-      positionLeft = spacing;
-    }
-
-    return {
-      left: positionLeft,
-      top: positionTop
-    };
-  }
-
-  private _removeTooltip() {
-    if (!this.tooltipElement) {
-      this.tooltipElement = undefined;
-      this.tooltipTimeout = undefined;
-      return;
-    }
-
-    this.tooltipElement.instance.fadeState = 'invisible';
-
-    this.canShow = false;
-
-    // wait for animation to finish then clear everything out
-    setTimeout(() => {
-      this.tooltipElement.destroy();
-      this.tooltipElement = undefined;
-      this.tooltipTimeout = undefined;
-      this.canShow = true;
-    }, 300);
-  }
-
-  private _resetTimer() {
-    clearTimeout(this.tooltipTimeout);
-    this.tooltipTimeout = setTimeout(this._removeTooltip.bind(this), this.duration);
+  ngAfterViewInit() {
+    this.initResolve();
   }
 
 }
