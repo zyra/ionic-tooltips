@@ -38,13 +38,13 @@ export class Tooltip implements AfterViewInit {
 
   @Input() duration: number = 3000;
 
-  @Input() set alwaysShow(val: boolean) {
+  @Input() set active(val: boolean) {
     this._alwaysShow = typeof val !== 'boolean' || val != false;
     this._alwaysShow
       ? this.showTooltip()
       : this._removeTooltip();
   }
-  get alwaysShow(): boolean { return this._alwaysShow; }
+  get active(): boolean { return this._alwaysShow; }
 
   private _arrow: boolean = false;
   private _navTooltip: boolean = false;
