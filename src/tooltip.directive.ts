@@ -1,6 +1,6 @@
 import {
   Directive, ElementRef, Input, ApplicationRef, ComponentFactoryResolver,
-  ViewContainerRef, ComponentRef
+  ViewContainerRef, ComponentRef, AfterViewInit
 } from '@angular/core';
 import { Platform } from 'ionic-angular';
 import { TooltipBox } from './tooltip-box.component';
@@ -12,7 +12,7 @@ import { TooltipBox } from './tooltip-box.component';
     '(click)': 'event === "click" && trigger()'
   }
 })
-export class Tooltip {
+export class Tooltip implements AfterViewInit {
 
   @Input() tooltip: string;
 
@@ -38,18 +38,51 @@ export class Tooltip {
 
   @Input() duration: number = 3000;
 
+  @Input() set alwaysShow(val: boolean) {
+    this._alwaysShow = typeof val !== 'boolean' || val != false;
+    this._alwaysShow
+      ? this.showTooltip()
+      : this._removeTooltip();
+  }
+  get alwaysShow(): boolean { return this._alwaysShow; }
+
   private _arrow: boolean = false;
   private _navTooltip: boolean = false;
   private tooltipElement: ComponentRef<TooltipBox>;
   private tooltipTimeout: any;
-  private canShow: boolean = true;
+  private _canShow: boolean = true;
+  private _alwaysShow: boolean = false;
 
   constructor(
-      private el: ElementRef
-      , private appRef: ApplicationRef
-      , private platform: Platform
-      , private _componentFactoryResolver: ComponentFactoryResolver
+      private el: ElementRef, 
+      private appRef: ApplicationRef, 
+      private platform: Platform, 
+      private _componentFactoryResolver: ComponentFactoryResolver
   ) {}
+
+  /**
+   * Show the tooltip immediately after initiating view if set to 
+   */
+  ngAfterViewInit() {
+    if (this._alwaysShow) {
+      this.trigger();
+    }
+  }
+
+  /**
+   * Set the canShow property 
+   * Ensure that tooltip is shown only if the tooltip string is not falsey
+   */
+  set canShow(show: boolean) {
+    this._canShow = show && Boolean(this.tooltip);
+  }
+
+  /**
+   * @return {boolean} TRUE if the tooltip can be shown
+   */
+  get canShow(): boolean {
+    return this._canShow;
+  }
 
   /**
    * Handles the click/press event and shows a tooltip.
