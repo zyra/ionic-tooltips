@@ -9,7 +9,8 @@ import { TooltipBox } from './tooltip-box.component';
   selector: '[tooltip]',
   host: {
     '(press)': 'event === "press" && trigger()',
-    '(click)': 'event === "click" && trigger()'
+    '(click)': 'event === "click" && trigger()',
+    '(hover)': 'event === "hover" && trigger()'
   }
 })
 export class Tooltip {
@@ -20,7 +21,7 @@ export class Tooltip {
 
   @Input() positionH: string;
 
-  @Input() event: 'press' | 'click' = 'click';
+  @Input() event: 'press' | 'click' | 'hover' = 'click';
 
   @Input()
   set navTooltip(val: boolean) {
