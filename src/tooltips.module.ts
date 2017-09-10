@@ -1,5 +1,5 @@
-import { TooltipsChildModule, childArgs } from './tooltips.child.module';
-import { NgModule, ModuleWithProviders } from '@angular/core';
+import { childArgs } from './tooltips.child.module';
+import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 const rootArgs: NgModule = Object.assign({}, childArgs);
