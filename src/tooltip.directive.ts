@@ -10,7 +10,8 @@ import { TooltipBox } from './tooltip-box.component';
   host: {
     '(press)': 'event === "press" && trigger()',
     '(click)': 'event === "click" && trigger()',
-    '(hover)': 'event === "hover" && trigger()'
+    '(mouseenter)': 'event === "hover" && active = true',
+    '(mouseleave)': 'event === "hover" && active = false'
   }
 })
 export class Tooltip implements AfterViewInit {
