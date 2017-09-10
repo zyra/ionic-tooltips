@@ -81,7 +81,8 @@ The `tooltip` directive takes a string, which will be used as the tooltip text. 
 (string) specifies the horizontal position of the tooltip. Can be either `'right'` or `'left'`.
 
 #### `event`
-(string) the event to show the tooltip on. Can be either `'click'` or `'press'`. Defaults to `'press'`.
+(string) the event to show the tooltip on. Can be either `'hover'`, `'click'` or `'press'`. Defaults to `'press'`.  
+Note: `'hover'` only works on desktop.
 
 #### `arrow`
 (boolean) add this attribute or set it's value to true to show an arrow attached to the tooltip. Defaults to `false`.
