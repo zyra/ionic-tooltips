@@ -132,7 +132,9 @@ export class Tooltip implements AfterViewInit {
         tooltipComponent.arrow = arrowPosition;
       }
 
-      this.tooltipTimeout = setTimeout(this._removeTooltip.bind(this), this.duration);
+      if (!this._active) {
+        this.tooltipTimeout = setTimeout(this._removeTooltip.bind(this), this.duration);
+      }
 
     });
 
@@ -212,6 +214,7 @@ export class Tooltip implements AfterViewInit {
   }
 
   private _resetTimer() {
+    this.active = false;
     clearTimeout(this.tooltipTimeout);
     this.tooltipTimeout = setTimeout(this._removeTooltip.bind(this), this.duration);
   }
