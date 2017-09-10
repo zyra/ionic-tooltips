@@ -89,6 +89,9 @@ The `tooltip` directive takes a string, which will be used as the tooltip text. 
 #### `duration`
 (number) number of milliseconds to show the tooltip for. Defaults to `3000`.
 
+#### `active`
+(boolean) add this attribute or set it's value to true to display the tooltip. Defaults to `false`.
+
 <br><br>
 ## Contribution
 - **Having an issue**? or looking for support? [Open an issue](https://github.com/zyra/ionic-tooltips/issues/new) and we will get you the help you need.
