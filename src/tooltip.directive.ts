@@ -39,19 +39,19 @@ export class Tooltip implements AfterViewInit {
   @Input() duration: number = 3000;
 
   @Input() set active(val: boolean) {
-    this._alwaysShow = typeof val !== 'boolean' || val != false;
-    this._alwaysShow
+    this._active = typeof val !== 'boolean' || val != false;
+    this._active
       ? this.showTooltip()
       : this._removeTooltip();
   }
-  get active(): boolean { return this._alwaysShow; }
+  get active(): boolean { return this._active; }
 
   private _arrow: boolean = false;
   private _navTooltip: boolean = false;
   private tooltipElement: ComponentRef<TooltipBox>;
   private tooltipTimeout: any;
   private _canShow: boolean = true;
-  private _alwaysShow: boolean = false;
+  private _active: boolean = false;
 
   constructor(
       private el: ElementRef, 
@@ -64,7 +64,7 @@ export class Tooltip implements AfterViewInit {
    * Show the tooltip immediately after initiating view if set to 
    */
   ngAfterViewInit() {
-    if (this._alwaysShow) {
+    if (this._active) {
       this.trigger();
     }
   }
