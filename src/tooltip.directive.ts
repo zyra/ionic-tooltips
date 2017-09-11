@@ -20,7 +20,7 @@ export class Tooltip implements AfterViewInit {
 
   @Input()
   set navTooltip(val: boolean) {
-    this._navTooltip = typeof val !== 'boolean' || val != false;
+    this._navTooltip = typeof val !== 'boolean' || val !== false;
   }
   get navTooltip(): boolean {
     return this._navTooltip;
@@ -28,14 +28,14 @@ export class Tooltip implements AfterViewInit {
 
   @Input()
   set arrow(val: boolean) {
-    this._arrow = typeof val !== 'boolean' || val != false;
+    this._arrow = typeof val !== 'boolean' || val !== false;
   }
   get arrow(): boolean { return this._arrow; }
 
   @Input() duration: number = 3000;
 
   @Input() set active(val: boolean) {
-    this._active = typeof val !== 'boolean' || val != false;
+    this._active = typeof val !== 'boolean' || val !== false;
     this._active
       ? this.canShow && this.showTooltip()
       : this._removeTooltip();
@@ -50,14 +50,14 @@ export class Tooltip implements AfterViewInit {
   private _active: boolean = false;
 
   constructor(
-      private el: ElementRef, 
-      private appRef: ApplicationRef, 
-      private platform: Platform, 
-      private _componentFactoryResolver: ComponentFactoryResolver
+    private el: ElementRef,
+    private appRef: ApplicationRef,
+    private platform: Platform,
+    private _componentFactoryResolver: ComponentFactoryResolver
   ) {}
 
   /**
-   * Show the tooltip immediately after initiating view if set to 
+   * Show the tooltip immediately after initiating view if set to
    */
   ngAfterViewInit() {
     if (this._active) {
@@ -66,7 +66,7 @@ export class Tooltip implements AfterViewInit {
   }
 
   /**
-   * Set the canShow property 
+   * Set the canShow property
    * Ensure that tooltip is shown only if the tooltip string is not falsey
    */
   set canShow(show: boolean) {
@@ -77,7 +77,7 @@ export class Tooltip implements AfterViewInit {
    * @return {boolean} TRUE if the tooltip can be shown
    */
   get canShow(): boolean {
-    return this._canShow && this.tooltip != "";
+    return this._canShow && this.tooltip !== '';
   }
 
   /**
@@ -158,17 +158,17 @@ export class Tooltip implements AfterViewInit {
 
   private _createTooltipComponent() {
     let
-        viewport: ViewContainerRef = (<any>this.appRef.components[0])._component._viewport,
-        componentFactory = this._componentFactoryResolver.resolveComponentFactory(TooltipBox);
+      viewport: ViewContainerRef = (<any>this.appRef.components[0])._component._viewport,
+      componentFactory = this._componentFactoryResolver.resolveComponentFactory(TooltipBox);
 
     this.tooltipElement = viewport.createComponent(componentFactory);
   }
 
   private _getTooltipPosition() {
     const
-        tooltipNativeElement: HTMLElement = this.tooltipElement.instance.getNativeElement(),
-        el: HTMLElement = this.el.nativeElement,
-        rect: ClientRect = el.getBoundingClientRect();
+      tooltipNativeElement: HTMLElement = this.tooltipElement.instance.getNativeElement(),
+      el: HTMLElement = this.el.nativeElement,
+      rect: ClientRect = el.getBoundingClientRect();
 
     let positionLeft: number, positionTop: number, spacing: number = 10;
 
@@ -184,7 +184,7 @@ export class Tooltip implements AfterViewInit {
     } else if (this.positionH === 'left') {
       positionLeft = rect.left - spacing - tooltipNativeElement.offsetWidth;
     } else if (this.navTooltip) {
-      positionLeft = rect.left + el.offsetWidth / 2
+      positionLeft = rect.left + el.offsetWidth / 2;
     } else {
       positionLeft = rect.left;
     }
