@@ -51,7 +51,7 @@ npm i --save --save-exact @angular/animations@4.1.3
 ```shell
 npm i --save ionic-tooltips
 ```
-3. Import `TooltipsModule` in your `@NgModule`. If you are using lazy module loading in your app, you might need to import it more than once.
+3. Import `TooltipsModule` in your `@NgModule`. If you are using lazy module loading, then you need to import it in the modules where it's used.
 ```ts
 import { TooltipsModule } from 'ionic-tooltips';
 
@@ -63,6 +63,18 @@ import { TooltipsModule } from 'ionic-tooltips';
    ]
 })
 export class MyModule { ... }
+```
+4. Import `BrowserAnimationsModule` in your app's main `@NgModule`.
+```ts
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+@NgModule({
+  ...
+  imports: [
+    ...
+    BrowserAnimationsModule
+  ]
+})
 ```
 
 Now you're ready to use this module. See information below for usage.
