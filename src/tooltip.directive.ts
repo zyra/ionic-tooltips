@@ -1,18 +1,12 @@
 import {
   Directive, ElementRef, Input, ApplicationRef, ComponentFactoryResolver,
-  ViewContainerRef, ComponentRef, AfterViewInit
+  ViewContainerRef, ComponentRef, AfterViewInit, HostListener
 } from '@angular/core';
 import { Platform } from 'ionic-angular';
 import { TooltipBox } from './tooltip-box.component';
 
 @Directive({
-  selector: '[tooltip]',
-  host: {
-    '(press)': 'event === "press" && trigger()',
-    '(click)': 'event === "click" && trigger()',
-    '(mouseenter)': 'event === "hover" && active = true',
-    '(mouseleave)': 'event === "hover" && active = false'
-  }
+  selector: '[tooltip]'
 })
 export class Tooltip implements AfterViewInit {
 
@@ -140,6 +134,26 @@ export class Tooltip implements AfterViewInit {
 
     });
 
+  }
+
+  @HostListener('click')
+  onClick(): void {
+    if (this.event === 'click') this.trigger();
+  }
+
+  @HostListener('press')
+  onPress(): void {
+    if (this.event === 'press') this.trigger();
+  }
+
+  @HostListener('mouseenter')
+  onMouseEnter(): void {
+    if (this.event === 'hover') this.active = true;
+  }
+
+  @HostListener('mouseleave')
+  onMouseLeave(): void {
+    if (this.event === 'hover') this.active = false;
   }
 
   private _createTooltipComponent() {
