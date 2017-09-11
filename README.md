@@ -22,7 +22,7 @@ Here's a quick example to show a tooltip below a button:
 ```html
 <!-- positionV specifies where the tooltip should be displayed vertically, can be either top or bottom -->
 <!-- arrow tells the tooltip directive to show an arrow above the tooltip box -->
-<button ion-button [tooltip]="I'm a tooltip below a button" positionV="bottom" arrow>
+<button ion-button tooltip="I'm a tooltip below a button" positionV="bottom" arrow>
   Press me to see a tooltip
 </button>
 ```
@@ -34,7 +34,7 @@ And here's another example to show a tooltip below a nav button:
     <ion-title>Page title</ion-title>
     <ion-buttons end>
       <!-- navTooltip tells the tooltip directive that this is a nav button -->
-      <ion-button icon-only [tooltip]="Call" navTooltip>
+      <ion-button icon-only tooltip="Call" navTooltip>
         <ion-icon name="call"></ion-icon>
       </ion-button>
     </ion-buttons>
@@ -88,6 +88,9 @@ The `tooltip` directive takes a string, which will be used as the tooltip text. 
 
 #### `duration`
 (number) number of milliseconds to show the tooltip for. Defaults to `3000`.
+
+#### `active`
+(boolean) add this attribute or set it's value to true to display the tooltip. Defaults to `false`.
 
 <br><br>
 ## Contribution
