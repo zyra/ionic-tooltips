@@ -1,9 +1,21 @@
-import { childArgs } from './tooltips.child.module';
 import { NgModule } from '@angular/core';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { IonicModule } from 'ionic-angular';
+import { Tooltip } from './tooltip.directive';
+import { TooltipBox } from './tooltip-box.component';
 
-const rootArgs: NgModule = Object.assign({}, childArgs);
-rootArgs.imports.push(BrowserAnimationsModule);
-
-@NgModule(rootArgs)
+@NgModule({
+  entryComponents: [
+    TooltipBox
+  ],
+  declarations: [
+    Tooltip,
+    TooltipBox,
+  ],
+  imports: [
+    IonicModule
+  ],
+  exports: [
+    Tooltip
+  ]
+})
 export class TooltipsModule {}
