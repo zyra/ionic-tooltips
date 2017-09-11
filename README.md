@@ -1,7 +1,6 @@
-[![npm](https://img.shields.io/npm/l/express.svg)](https://www.npmjs.com/package/ionic-tooltips/)
-
-[![NPM](https://nodei.co/npm/ionic-tooltips.png?stars&downloads)](https://nodei.co/npm/ionic-tooltips/)
-[![NPM](https://nodei.co/npm-dl/ionic-tooltips.png?months=6&height=2)](https://nodei.co/npm/ionic-tooltips/)
+[![npm](https://img.shields.io/npm/l/ionic-tooltips.svg)](https://www.npmjs.com/package/ionic-tooltips/)
+[![npm](https://img.shields.io/npm/dt/ionic-tooltips.svg)](https://www.npmjs.com/package/ionic-tooltips)
+[![npm](https://img.shields.io/npm/dm/ionic-tooltips.svg)](https://www.npmjs.com/package/ionic-tooltips)
 
 # Ionic Tooltips
 Tooltips module for apps built with Ionic Framework.
