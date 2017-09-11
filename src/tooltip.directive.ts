@@ -9,7 +9,9 @@ import { TooltipBox } from './tooltip-box.component';
   selector: '[tooltip]',
   host: {
     '(press)': 'event === "press" && trigger()',
-    '(click)': 'event === "click" && trigger()'
+    '(click)': 'event === "click" && trigger()',
+    '(mouseenter)': 'event === "hover" && active = true',
+    '(mouseleave)': 'event === "hover" && active = false'
   }
 })
 export class Tooltip implements AfterViewInit {
@@ -20,7 +22,7 @@ export class Tooltip implements AfterViewInit {
 
   @Input() positionH: string;
 
-  @Input() event: 'press' | 'click' = 'click';
+  @Input() event: 'press' | 'click' | 'hover' = 'click';
 
   @Input()
   set navTooltip(val: boolean) {
@@ -41,7 +43,7 @@ export class Tooltip implements AfterViewInit {
   @Input() set active(val: boolean) {
     this._active = typeof val !== 'boolean' || val != false;
     this._active
-      ? this.showTooltip()
+      ? this.canShow && this.showTooltip()
       : this._removeTooltip();
   }
   get active(): boolean { return this._active; }
@@ -74,14 +76,14 @@ export class Tooltip implements AfterViewInit {
    * Ensure that tooltip is shown only if the tooltip string is not falsey
    */
   set canShow(show: boolean) {
-    this._canShow = show && Boolean(this.tooltip);
+    this._canShow = show;
   }
 
   /**
    * @return {boolean} TRUE if the tooltip can be shown
    */
   get canShow(): boolean {
-    return this._canShow;
+    return this._canShow && this.tooltip != "";
   }
 
   /**
