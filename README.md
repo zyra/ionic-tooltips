@@ -89,7 +89,7 @@ The `tooltip` directive takes a string, which will be used as the tooltip text. 
 (string) specifies the vertical position of the tooltip. Can be either `'top'` or `'bottom'`.
 
 #### `positionH`
-(string) specifies the horizontal position of the tooltip. Can be either `'right'` or `'left'`.
+(string) specifies the horizontal position of the tooltip. Can be either `'right'` or `'left'` or `'center'`.
 
 #### `event`
 (string) the event to show the tooltip on. Can be either `'hover'`, `'click'` or `'press'`. Defaults to `'press'`.  
