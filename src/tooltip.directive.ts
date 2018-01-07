@@ -183,6 +183,8 @@ export class Tooltip implements AfterViewInit {
       positionLeft = rect.right + spacing;
     } else if (this.positionH === 'left') {
       positionLeft = rect.left - spacing - tooltipNativeElement.offsetWidth;
+    } else if (this.positionH === 'center') {
+    	positionLeft = rect.left - (spacing + tooltipNativeElement.offsetWidth) / 2
     } else if (this.navTooltip) {
       positionLeft = rect.left + el.offsetWidth / 2;
     } else {
