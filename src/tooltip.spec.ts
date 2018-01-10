@@ -1,4 +1,5 @@
 import {
+  AfterViewInit,
   Component, DebugElement, ElementRef, ViewChild,
   ViewContainerRef
 } from '@angular/core';
@@ -10,10 +11,10 @@ import { Tooltip } from './tooltip.directive';
 import { TooltipBox } from './tooltip-box.component';
 
 @Component({
-  selector: 'test-page',
+  selector: 'tooltip-view',
   template: '<button #btn tooltip="Hello world" [duration]="1000" [active]="active">Click me</button>'
 })
-export class TestPage {
+export class TestPage implements AfterViewInit {
 
   @ViewChild('btn') button: ElementRef;
 
