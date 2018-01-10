@@ -1,3 +1,13 @@
+<a name="2.0.1"></a>
+## [2.0.1](https://github.com/zyra/ionic-tooltips/compare/v2.0.0...v2.0.1) (2018-01-10)
+
+
+### Bug Fixes
+
+* **tooltip:** prevent error caused by an undefined value ([4d16bd3](https://github.com/zyra/ionic-tooltips/commit/4d16bd3))
+
+
+
 <a name="2.0.0"></a>
 # [2.0.0](https://github.com/zyra/ionic-tooltips/compare/v1.0.0...v2.0.0) (2017-09-11)
 
