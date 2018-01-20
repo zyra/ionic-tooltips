@@ -229,7 +229,6 @@ export class Tooltip implements AfterViewInit {
   }
 
   private _resetTimer() {
-    this.active = false;
     clearTimeout(this.tooltipTimeout);
     this.tooltipTimeout = setTimeout(this._removeTooltip.bind(this), this.duration);
   }
