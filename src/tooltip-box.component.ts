@@ -1,4 +1,4 @@
-import { Component, Input, ElementRef, Renderer, HostBinding, ChangeDetectionStrategy, AfterViewInit } from '@angular/core';
+import { Component, Input, ElementRef, Renderer2, HostBinding, ChangeDetectionStrategy, AfterViewInit } from '@angular/core';
 import { animate, trigger, style, state, transition } from '@angular/animations';
 
 @Component({
@@ -47,18 +47,17 @@ export class TooltipBox implements AfterViewInit {
 
   @Input()
   set arrow(side: string) {
-    this.rnd.setElementClass(this.getNativeElement(), 'has-arrow', true);
-    this.rnd.setElementClass(this.getNativeElement(), 'arrow-' + side, true);
+    this.rnd.setAttribute(this.getNativeElement(), 'class', 'has-arrow ' + 'arrow-' + side);
   }
 
   @Input()
   set posTop(val: number) {
-    this.rnd.setElementStyle(this.getNativeElement(), 'top', val + 'px');
+    this.rnd.setStyle(this.getNativeElement(), 'top', val + 'px');
   }
 
   @Input()
   set posLeft(val: number) {
-    this.rnd.setElementStyle(this.getNativeElement(), 'left', val + 'px');
+    this.rnd.setStyle(this.getNativeElement(), 'left', val + 'px');
   }
 
   getNativeElement(): HTMLElement {
@@ -69,7 +68,7 @@ export class TooltipBox implements AfterViewInit {
 
   private initResolve: Function;
 
-  constructor(public elementRef: ElementRef, private rnd: Renderer) {
+  constructor(public elementRef: ElementRef, private rnd: Renderer2) {
     this.init = new Promise<void>(resolve => {
       this.initResolve = resolve;
     });

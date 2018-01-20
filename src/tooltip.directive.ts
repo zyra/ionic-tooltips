@@ -222,9 +222,8 @@ export class Tooltip implements AfterViewInit {
 
     // wait for animation to finish then clear everything out
     setTimeout(() => {
-      this.tooltipElement.destroy();
-      this.tooltipElement = undefined;
-      this.tooltipTimeout = undefined;
+      if (this.tooltipElement && typeof this.tooltipElement.destroy === 'function') this.tooltipElement.destroy();
+      this.tooltipElement = this.tooltipTimeout = undefined;
       this.canShow = true;
     }, 300);
   }
