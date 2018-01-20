@@ -8,7 +8,7 @@ import { TooltipBox } from './tooltip-box.component';
 @Directive({
   selector: '[tooltip]'
 })
-export class Tooltip implements AfterViewInit {
+export class Tooltip {
 
   @Input() tooltip: string;
 
