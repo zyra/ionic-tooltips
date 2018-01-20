@@ -57,15 +57,6 @@ export class Tooltip implements AfterViewInit {
   ) {}
 
   /**
-   * Show the tooltip immediately after initiating view if set to
-   */
-  ngAfterViewInit() {
-    if (this._active) {
-      this.trigger();
-    }
-  }
-
-  /**
    * Set the canShow property
    * Ensure that tooltip is shown only if the tooltip string is not falsey
    */
@@ -230,7 +221,9 @@ export class Tooltip implements AfterViewInit {
 
   private _resetTimer() {
     clearTimeout(this.tooltipTimeout);
-    this.tooltipTimeout = setTimeout(this._removeTooltip.bind(this), this.duration);
+    this.tooltipTimeout = setTimeout(() => {
+      this.active = false;
+    }, this.duration);
   }
 
 }
