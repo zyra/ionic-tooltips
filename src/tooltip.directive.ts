@@ -1,6 +1,6 @@
 import {
   Directive, ElementRef, Input, ApplicationRef, ComponentFactoryResolver,
-  ViewContainerRef, ComponentRef, AfterViewInit, HostListener
+  ViewContainerRef, ComponentRef, AfterViewInit, HostListener, OnDestroy
 } from '@angular/core';
 import { Platform } from 'ionic-angular';
 import { TooltipBox } from './tooltip-box.component';
@@ -8,7 +8,7 @@ import { TooltipBox } from './tooltip-box.component';
 @Directive({
   selector: '[tooltip]'
 })
-export class Tooltip implements AfterViewInit {
+export class Tooltip implements AfterViewInit, OnDestroy {
 
   @Input() tooltip: string;
 
@@ -63,6 +63,10 @@ export class Tooltip implements AfterViewInit {
     if (this._active) {
       this.trigger();
     }
+  }
+
+  ngOnDestroy() {
+    if (this.tooltipElement && typeof this.tooltipElement.destroy === 'function') this.tooltipElement.destroy();
   }
 
   /**
