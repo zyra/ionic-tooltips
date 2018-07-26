@@ -1,21 +1,25 @@
 import {
   AfterViewInit,
-  Component, DebugElement, ElementRef, ViewChild,
+  Component,
+  DebugElement,
+  ElementRef,
+  ViewChild,
   ViewContainerRef
 } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { TooltipsModule } from './tooltips.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { IonicModule } from 'ionic-angular';
-import { Tooltip } from './tooltip.directive';
+
 import { TooltipBox } from './tooltip-box.component';
+import { Tooltip } from './tooltip.directive';
+import { TooltipsModule } from './tooltips.module';
 
 @Component({
   selector: 'tooltip-view',
-  template: '<button #btn tooltip="Hello world" [duration]="1000" [active]="active">Click me</button>'
+  template:
+    '<button #btn tooltip="Hello world" [duration]="1000" [active]="active">Click me</button>'
 })
-export class TestPage implements AfterViewInit {
-
+class TestPage implements AfterViewInit {
   @ViewChild('btn') button: ElementRef;
 
   @ViewChild(Tooltip) tooltip: Tooltip;
@@ -37,12 +41,9 @@ export class TestPage implements AfterViewInit {
       _component: this
     });
   }
-
 }
 
-
 describe('Tooltip', () => {
-
   let de: DebugElement,
     comp: TestPage,
     fixture: ComponentFixture<TestPage>,
@@ -108,5 +109,4 @@ describe('Tooltip', () => {
     fixture.detectChanges();
     expect(getTooltipBox().getNativeElement().innerText).toEqual('Hello world');
   });
-
 });
