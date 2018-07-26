@@ -1,15 +1,22 @@
 import {
-  Directive, ElementRef, Input, ApplicationRef, ComponentFactoryResolver,
-  ViewContainerRef, ComponentRef, AfterViewInit, HostListener
+  AfterViewInit,
+  ApplicationRef,
+  ComponentFactoryResolver,
+  ComponentRef,
+  Directive,
+  ElementRef,
+  HostListener,
+  Input,
+  ViewContainerRef
 } from '@angular/core';
 import { Platform } from 'ionic-angular';
+
 import { TooltipBox } from './tooltip-box.component';
 
 @Directive({
   selector: '[tooltip]'
 })
 export class Tooltip implements AfterViewInit {
-
   @Input() tooltip: string;
 
   @Input() positionV: string;
@@ -30,17 +37,20 @@ export class Tooltip implements AfterViewInit {
   set arrow(val: boolean) {
     this._arrow = typeof val !== 'boolean' || val !== false;
   }
-  get arrow(): boolean { return this._arrow; }
+  get arrow(): boolean {
+    return this._arrow;
+  }
 
   @Input() duration: number = 3000;
 
-  @Input() set active(val: boolean) {
+  @Input()
+  set active(val: boolean) {
     this._active = typeof val !== 'boolean' || val !== false;
-    this._active
-      ? this.canShow && this.showTooltip()
-      : this._removeTooltip();
+    this._active ? this.canShow && this.showTooltip() : this._removeTooltip();
   }
-  get active(): boolean { return this._active; }
+  get active(): boolean {
+    return this._active;
+  }
 
   private _arrow: boolean = false;
   private _navTooltip: boolean = false;
@@ -94,19 +104,16 @@ export class Tooltip implements AfterViewInit {
     }
   }
 
-
   /**
    * Creates a new tooltip component and adjusts it's properties to show properly.
    */
   showTooltip() {
-
     this._createTooltipComponent();
 
     const tooltipComponent: TooltipBox = this.tooltipElement.instance;
 
     tooltipComponent.text = this.tooltip;
     tooltipComponent.init.then(() => {
-
       const tooltipPosition = this._getTooltipPosition();
 
       tooltipComponent.posLeft = tooltipPosition.left;
@@ -129,11 +136,12 @@ export class Tooltip implements AfterViewInit {
       }
 
       if (!this._active) {
-        this.tooltipTimeout = setTimeout(this._removeTooltip.bind(this), this.duration);
+        this.tooltipTimeout = setTimeout(
+          this._removeTooltip.bind(this),
+          this.duration
+        );
       }
-
     });
-
   }
 
   @HostListener('click')
@@ -157,27 +165,29 @@ export class Tooltip implements AfterViewInit {
   }
 
   private _createTooltipComponent() {
-    let
-      viewport: ViewContainerRef = (<any>this.appRef.components[0])._component._viewport,
-      componentFactory = this._componentFactoryResolver.resolveComponentFactory(TooltipBox);
+    let viewport: ViewContainerRef = (<any>this.appRef.components[0])._component
+        ._viewport,
+      componentFactory = this._componentFactoryResolver.resolveComponentFactory(
+        TooltipBox
+      );
 
     this.tooltipElement = viewport.createComponent(componentFactory);
   }
 
   private _getTooltipPosition() {
-    const
-      tooltipNativeElement: HTMLElement = this.tooltipElement.instance.getNativeElement(),
+    const tooltipNativeElement: HTMLElement = this.tooltipElement.instance.getNativeElement(),
       el: HTMLElement = this.el.nativeElement,
       rect: ClientRect = el.getBoundingClientRect();
 
-    let positionLeft: number, positionTop: number, spacing: number = 10;
+    let positionLeft: number,
+      positionTop: number,
+      spacing: number = 10;
 
     if (this.navTooltip) {
       this.positionV = 'bottom';
       this.arrow = false;
       spacing = 20;
     }
-
 
     if (this.positionH === 'right') {
       positionLeft = rect.right + spacing;
@@ -191,14 +201,19 @@ export class Tooltip implements AfterViewInit {
 
     if (this.positionV === 'top') {
       positionTop = rect.top - spacing - tooltipNativeElement.offsetHeight;
-    } else if(this.positionV === 'bottom') {
+    } else if (this.positionV === 'bottom') {
       positionTop = rect.bottom + spacing;
     } else {
-      positionTop = (rect.top + el.offsetHeight / 2) - tooltipNativeElement.offsetHeight / 2;
+      positionTop =
+        rect.top + el.offsetHeight / 2 - tooltipNativeElement.offsetHeight / 2;
     }
 
-    if (positionLeft + tooltipNativeElement.offsetWidth + spacing > this.platform.width()) {
-      positionLeft = this.platform.width() - tooltipNativeElement.offsetWidth - spacing;
+    if (
+      positionLeft + tooltipNativeElement.offsetWidth + spacing >
+      this.platform.width()
+    ) {
+      positionLeft =
+        this.platform.width() - tooltipNativeElement.offsetWidth - spacing;
     } else if (positionLeft + tooltipNativeElement.offsetWidth - spacing < 0) {
       positionLeft = spacing;
     }
@@ -222,7 +237,11 @@ export class Tooltip implements AfterViewInit {
 
     // wait for animation to finish then clear everything out
     setTimeout(() => {
-      if (this.tooltipElement && typeof this.tooltipElement.destroy === 'function') this.tooltipElement.destroy();
+      if (
+        this.tooltipElement &&
+        typeof this.tooltipElement.destroy === 'function'
+      )
+        this.tooltipElement.destroy();
       this.tooltipElement = this.tooltipTimeout = undefined;
       this.canShow = true;
     }, 300);
@@ -231,7 +250,9 @@ export class Tooltip implements AfterViewInit {
   private _resetTimer() {
     this.active = false;
     clearTimeout(this.tooltipTimeout);
-    this.tooltipTimeout = setTimeout(this._removeTooltip.bind(this), this.duration);
+    this.tooltipTimeout = setTimeout(
+      this._removeTooltip.bind(this),
+      this.duration
+    );
   }
-
 }
