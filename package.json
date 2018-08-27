@@ -7,7 +7,8 @@
   "scripts": {
     "prebuild": "rimraf -rf aot dist ",
     "build": "ngc",
-    "prepare": "npm install rimraf && npm run build",
+    "copy-dist": "gulp copy-dist",
+    "prepare": "npm install rimraf && npm run build && npm run copy-dist",
     "postversion": "npm run changelog",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0",
     "postchangelog": "git commit -am \"chore(): update changelog\"",
@@ -37,6 +38,7 @@
     "angular2-template-loader": "^0.6.2",
     "codelyzer": "^4.4.2",
     "conventional-changelog-cli": "^2.0.1",
+    "gulp": "^3.9.1",
     "ionic-angular": "^3.9.2",
     "ionicons": "3.0.0",
     "istanbul-instrumenter-loader": "^3.0.1",
