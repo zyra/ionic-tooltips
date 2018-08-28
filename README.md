@@ -50,7 +50,7 @@ And here's another example to show a tooltip below a nav button:
 1.  Make sure you have `@angular/animations` installed. If you don't have it, run the following command to install it:
 
 ```shell
-npm i --save-exact @angular/animations@5
+npm i @angular/animations
 ```
 
 2.  Install this module by running the following command:
