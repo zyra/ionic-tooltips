@@ -1,35 +1,49 @@
-import { Component, Input, ElementRef, Renderer2, HostBinding, ChangeDetectionStrategy, AfterViewInit } from '@angular/core';
-import { animate, trigger, style, state, transition } from '@angular/animations';
+import {
+  animate,
+  state,
+  style,
+  transition,
+  trigger
+} from '@angular/animations';
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  HostBinding,
+  Input,
+  Renderer2
+} from '@angular/core';
 
 @Component({
   selector: 'tooltip-box',
   template: '{{ text }}',
   animations: [
     trigger('fade', [
-      state('visible', style({ opacity: 1})),
+      state('visible', style({ opacity: 1 })),
       state('invisible', style({ opacity: 0 })),
       transition('visible <=> invisible', animate('300ms linear'))
     ])
   ],
   styles: [
-      `
-          :host {
-              background-color: rgba(0,0,0,0.8);
-              color: white;
-              display: inline-block;
-              position: fixed;
-              padding: 15px 25px;
-              font-size: 15px;
-          }
+    `
+      :host {
+        background-color: rgba(0, 0, 0, 0.8);
+        color: white;
+        display: inline-block;
+        position: fixed;
+        padding: 15px 25px;
+        font-size: 15px;
+      }
     `,
-      `
-          :host.has-arrow:before {
-              content: '';
-              border: 5px solid transparent;
-              position: absolute;
-              width: 0;
-              height: 0;
-          }
+    `
+      :host.has-arrow:before {
+        content: '';
+        border: 5px solid transparent;
+        position: absolute;
+        width: 0;
+        height: 0;
+      }
     `,
     ':host.has-arrow.arrow-top:before { border-bottom: 5px solid rgba(0,0,0,0.8); top: -10px; }',
     ':host.has-arrow.arrow-left:before { border-right: 5px solid rgba(0,0,0,0.8); left: -10px; }',
@@ -39,15 +53,17 @@ import { animate, trigger, style, state, transition } from '@angular/animations'
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TooltipBox implements AfterViewInit {
-
   @HostBinding('@fade') fadeState: string = 'invisible';
 
-  @Input()
-  text: string;
+  @Input() text: string;
 
   @Input()
   set arrow(side: string) {
-    this.rnd.setAttribute(this.getNativeElement(), 'class', 'has-arrow ' + 'arrow-' + side);
+    this.rnd.setAttribute(
+      this.getNativeElement(),
+      'class',
+      'has-arrow ' + 'arrow-' + side
+    );
   }
 
   @Input()
@@ -77,5 +93,4 @@ export class TooltipBox implements AfterViewInit {
   ngAfterViewInit() {
     this.initResolve();
   }
-
 }
