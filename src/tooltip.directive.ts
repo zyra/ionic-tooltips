@@ -16,7 +16,8 @@ import { TooltipBox } from './tooltip-box.component';
 @Directive({
   selector: '[tooltip]'
 })
-export class Tooltip implements AfterViewInit {
+export class Tooltip {
+
   @Input() tooltip: string;
 
   @Input() positionV: string;
@@ -65,15 +66,6 @@ export class Tooltip implements AfterViewInit {
     private platform: Platform,
     private _componentFactoryResolver: ComponentFactoryResolver
   ) {}
-
-  /**
-   * Show the tooltip immediately after initiating view if set to
-   */
-  ngAfterViewInit() {
-    if (this._active) {
-      this.trigger();
-    }
-  }
 
   /**
    * Set the canShow property
@@ -248,11 +240,14 @@ export class Tooltip implements AfterViewInit {
   }
 
   private _resetTimer() {
-    this.active = false;
-    clearTimeout(this.tooltipTimeout);
-    this.tooltipTimeout = setTimeout(
-      this._removeTooltip.bind(this),
-      this.duration
-    );
+    clearTimeout(this.tooltipTimeout); 
+    this.tooltipTimeout = setTimeout(() => {
+      this.active = false;
+    }, this.duration);
+  }
+  ngOnDestroy() {
+    // if the timer hasn't expired or active is true when the component gets destroyed, the tooltip will remain in the DOM
+    // this removes it
+    this._removeTooltip();
   }
 }
