@@ -1,13 +1,6 @@
 import {
-  AfterViewInit,
-  ApplicationRef,
-  ComponentFactoryResolver,
-  ComponentRef,
-  Directive,
-  ElementRef,
-  HostListener,
-  Input,
-  ViewContainerRef
+  Directive, ElementRef, Input, ApplicationRef, ComponentFactoryResolver,
+  ViewContainerRef, ComponentRef, HostListener, OnDestroy
 } from '@angular/core';
 import { Platform } from 'ionic-angular';
 
@@ -16,7 +9,8 @@ import { TooltipBox } from './tooltip-box.component';
 @Directive({
   selector: '[tooltip]'
 })
-export class Tooltip {
+export class Tooltip implements OnDestroy {
+
 
   @Input() tooltip: string;
 
@@ -66,6 +60,19 @@ export class Tooltip {
     private platform: Platform,
     private _componentFactoryResolver: ComponentFactoryResolver
   ) {}
+
+  /**
+   * Show the tooltip immediately after initiating view if set to
+   */
+  ngAfterViewInit() {
+    if (this._active) {
+      this.trigger();
+    }
+  }
+
+  ngOnDestroy() {
+    if (this.tooltipElement && typeof this.tooltipElement.destroy === 'function') this.tooltipElement.destroy();
+  }
 
   /**
    * Set the canShow property
