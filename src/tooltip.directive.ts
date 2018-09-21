@@ -1,6 +1,6 @@
 import {
   Directive, ElementRef, Input, ApplicationRef, ComponentFactoryResolver,
-  ViewContainerRef, ComponentRef, AfterViewInit, HostListener, OnDestroy
+  ViewContainerRef, ComponentRef, HostListener, OnDestroy
 } from '@angular/core';
 import { Platform } from 'ionic-angular';
 
@@ -9,7 +9,8 @@ import { TooltipBox } from './tooltip-box.component';
 @Directive({
   selector: '[tooltip]'
 })
-export class Tooltip implements AfterViewInit, OnDestroy {
+export class Tooltip implements OnDestroy {
+
 
   @Input() tooltip: string;
 
@@ -246,11 +247,14 @@ export class Tooltip implements AfterViewInit, OnDestroy {
   }
 
   private _resetTimer() {
-    this.active = false;
-    clearTimeout(this.tooltipTimeout);
-    this.tooltipTimeout = setTimeout(
-      this._removeTooltip.bind(this),
-      this.duration
-    );
+    clearTimeout(this.tooltipTimeout); 
+    this.tooltipTimeout = setTimeout(() => {
+      this.active = false;
+    }, this.duration);
+  }
+  ngOnDestroy() {
+    // if the timer hasn't expired or active is true when the component gets destroyed, the tooltip will remain in the DOM
+    // this removes it
+    this._removeTooltip();
   }
 }
