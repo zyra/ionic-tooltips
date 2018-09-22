@@ -109,7 +109,7 @@ The `tooltip` directive takes a string, which will be used as the tooltip text. 
 #### `event`
 
 (string) the event to show the tooltip on. Can be either `'hover'`, `'click'` or `'press'`. Defaults to `'press'`.  
-Note: `'hover'` only works on desktop.
+Note: `'hover'` defaults to `'click'` on mobile.
 
 #### `arrow`
 
@@ -122,6 +122,14 @@ Note: `'hover'` only works on desktop.
 #### `active`
 
 (boolean) add this attribute or set it's value to true to display the tooltip. Defaults to `false`.
+
+#### `top`
+
+(number) modifies the vertical position of the tooltip.
+
+#### `left`
+
+(number) modifies the horizontal position of the tooltip.
 
 <br><br>
 
