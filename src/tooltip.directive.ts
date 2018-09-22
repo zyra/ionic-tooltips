@@ -145,7 +145,7 @@ export class Tooltip implements OnDestroy {
 
   @HostListener('click')
   onClick(): void {
-    if (this.event === 'click' || (this.event == 'hover' && this.platform.is('mobile'))) this.trigger();
+    if (this.event === 'click') this.trigger();
   }
 
   @HostListener('press')
@@ -155,12 +155,12 @@ export class Tooltip implements OnDestroy {
 
   @HostListener('mouseenter')
   onMouseEnter(): void {
-    if (this.event === 'hover' && !this.platform.is('mobile')) this.active = true;
+    if (this.event === 'hover') this.active = true;
   }
 
   @HostListener('mouseleave')
   onMouseLeave(): void {
-    if (this.event === 'hover' && !this.platform.is('mobile')) this.active = false;
+    if (this.event === 'hover') this.active = false;
   }
 
   private _createTooltipComponent() {
