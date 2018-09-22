@@ -247,14 +247,9 @@ export class Tooltip implements OnDestroy {
   }
 
   private _resetTimer() {
-    clearTimeout(this.tooltipTimeout); 
+    clearTimeout(this.tooltipTimeout);
     this.tooltipTimeout = setTimeout(() => {
       this.active = false;
     }, this.duration);
-  }
-  ngOnDestroy() {
-    // if the timer hasn't expired or active is true when the component gets destroyed, the tooltip will remain in the DOM
-    // this removes it
-    this._removeTooltip();
   }
 }
