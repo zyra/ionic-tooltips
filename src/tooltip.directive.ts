@@ -20,6 +20,10 @@ export class Tooltip implements OnDestroy {
 
   @Input() event: 'press' | 'click' | 'hover' = 'click';
 
+  @Input() top: number;
+
+  @Input() left: number;
+
   @Input()
   set navTooltip(val: boolean) {
     this._navTooltip = typeof val !== 'boolean' || val !== false;
@@ -216,10 +220,9 @@ export class Tooltip implements OnDestroy {
     } else if (positionLeft + tooltipNativeElement.offsetWidth - spacing < 0) {
       positionLeft = spacing;
     }
-
     return {
-      left: positionLeft,
-      top: positionTop
+      left: (+this.left) ? positionLeft + (+this.left) : positionLeft,
+      top: (+this.top) ? positionTop + (+this.top) : positionTop
     };
   }
 
