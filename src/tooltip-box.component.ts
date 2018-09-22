@@ -68,6 +68,7 @@ export class TooltipBox implements AfterViewInit {
 
   @Input()
   set posTop(val: number) {
+    console.log('your va;', val);
     this.rnd.setStyle(this.getNativeElement(), 'top', val + 'px');
   }
 
