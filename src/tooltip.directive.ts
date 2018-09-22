@@ -118,7 +118,6 @@ export class Tooltip implements OnDestroy {
     tooltipComponent.text = this.tooltip;
     tooltipComponent.init.then(() => {
       const tooltipPosition = this._getTooltipPosition();
-      console.log('your position', tooltipPosition);
 
       tooltipComponent.posLeft = tooltipPosition.left;
       tooltipComponent.posTop = tooltipPosition.top;
