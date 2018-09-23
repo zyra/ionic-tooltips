@@ -123,6 +123,16 @@ Note: `'hover'` only works on desktop.
 
 (boolean) add this attribute or set it's value to true to display the tooltip. Defaults to `false`.
 
+#### `topOffset`
+
+(number) add this attribute to offset the vertical position of the tooltip. Defaults to 0.
+
+#### `leftOffset`
+
+(number) add this attribute to offset the horizontal position of the tooltip. Defaults to 0.
+ 
+
+
 <br><br>
 
 ## Versioning

@@ -20,6 +20,10 @@ export class Tooltip implements OnDestroy {
 
   @Input() event: 'press' | 'click' | 'hover' = 'click';
 
+  @Input() topOffset: number;
+
+  @Input() leftOffset: number;
+
   @Input()
   set navTooltip(val: boolean) {
     this._navTooltip = typeof val !== 'boolean' || val !== false;
@@ -68,10 +72,6 @@ export class Tooltip implements OnDestroy {
     if (this._active) {
       this.trigger();
     }
-  }
-
-  ngOnDestroy() {
-    if (this.tooltipElement && typeof this.tooltipElement.destroy === 'function') this.tooltipElement.destroy();
   }
 
   /**
@@ -207,6 +207,9 @@ export class Tooltip implements OnDestroy {
         rect.top + el.offsetHeight / 2 - tooltipNativeElement.offsetHeight / 2;
     }
 
+    if(+this.topOffset) positionTop += +this.topOffset;
+    if(+this.leftOffset) positionLeft += +this.leftOffset;
+
     if (
       positionLeft + tooltipNativeElement.offsetWidth + spacing >
       this.platform.width()
@@ -215,6 +218,12 @@ export class Tooltip implements OnDestroy {
         this.platform.width() - tooltipNativeElement.offsetWidth - spacing;
     } else if (positionLeft + tooltipNativeElement.offsetWidth - spacing < 0) {
       positionLeft = spacing;
+    }
+
+    if (positionTop + tooltipNativeElement.offsetHeight + spacing > this.platform.height()) {
+      positionTop = this.platform.height() - tooltipNativeElement.offsetHeight - spacing;
+    } else if (positionTop + tooltipNativeElement.offsetHeight - spacing < 0) {
+      positionTop = spacing;
     }
 
     return {
@@ -247,7 +256,7 @@ export class Tooltip implements OnDestroy {
   }
 
   private _resetTimer() {
-    clearTimeout(this.tooltipTimeout); 
+    clearTimeout(this.tooltipTimeout);
     this.tooltipTimeout = setTimeout(() => {
       this.active = false;
     }, this.duration);
