@@ -68,7 +68,7 @@ import { TooltipsModule } from 'ionic-tooltips';
    ...
    imports: [
       ...
-      TooltipsModule
+      TooltipsModule.forRoot()
    ]
 })
 export class MyModule { ... }
@@ -145,8 +145,6 @@ Note: This only works when the `event` attribute is omitted.
 
 (boolean) add this attribute to set weather to hide other visible tooltips. Defaults to `false`.
  
-
-
 <br><br>
 
 ## Versioning
