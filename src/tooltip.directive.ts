@@ -12,6 +12,7 @@ import {
   ViewContainerRef,
 }                   from '@angular/core';
 import { Platform } from 'ionic-angular';
+import { TooltipProvider } from './providers/tooltip';
 
 import { TooltipBox } from './tooltip-box.component';
 
@@ -36,6 +37,8 @@ export class Tooltip implements OnInit, AfterViewInit, OnDestroy {
   @Input() topOffset: number;
 
   @Input() leftOffset: number;
+
+  @Input() hideOthers: boolean = false;
 
   @Input()
   set navTooltip(val: boolean) {
@@ -79,6 +82,7 @@ export class Tooltip implements OnInit, AfterViewInit, OnDestroy {
     private appRef: ApplicationRef,
     private platform: Platform,
     private _componentFactoryResolver: ComponentFactoryResolver,
+    private tooltipProv: TooltipProvider
   ) {
   }
 
@@ -203,6 +207,7 @@ export class Tooltip implements OnInit, AfterViewInit, OnDestroy {
       );
 
     this.tooltipElement = viewport.createComponent(componentFactory);
+    this.tooltipProv.newTooltip(this);
   }
 
   private _getTooltipPosition() {
@@ -287,6 +292,7 @@ export class Tooltip implements OnInit, AfterViewInit, OnDestroy {
       ) {
         this.tooltipElement.destroy();
       }
+      this.tooltipProv.removeTooltip(this);
       this.tooltipElement = this.tooltipTimeout = undefined;
       this.canShow = true;
     }, 300);
@@ -302,6 +308,11 @@ export class Tooltip implements OnInit, AfterViewInit, OnDestroy {
   ngOnDestroy() {
     // if the timer hasn't expired or active is true when the component gets destroyed, the tooltip will remain in the DOM
     // this removes it
+    this._removeTooltip();
+    console.log('ran')
+  }
+
+  hide() {
     this._removeTooltip();
   }
 }
