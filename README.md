@@ -135,11 +135,15 @@ Note: This only works when the `event` attribute is omitted.
 
 #### `topOffset`
 
-(number) add this attribute to offset the vertical position of the tooltip. Defaults to 0.
+(number) add this attribute to offset the vertical position of the tooltip. Defaults to `0`.
 
 #### `leftOffset`
 
-(number) add this attribute to offset the horizontal position of the tooltip. Defaults to 0.
+(number) add this attribute to offset the horizontal position of the tooltip. Defaults to `0`.
+
+#### `hideOthers`
+
+(boolean) add this attribute to set weather to hide other visible tooltips. Defaults to `false`.
  
 
 
