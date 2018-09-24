@@ -1,6 +1,6 @@
-import { NgModule } from '@angular/core';
+import { ModuleWithProviders, NgModule } from '@angular/core';
 import { IonicModule } from 'ionic-angular';
-import { TooltipProvider } from './providers/tooltip';
+import { TooltipController } from './tooltip.cotroller';
 
 import { TooltipBox } from './tooltip-box.component';
 import { Tooltip } from './tooltip.directive';
@@ -9,9 +9,13 @@ import { Tooltip } from './tooltip.directive';
   entryComponents: [TooltipBox],
   declarations: [Tooltip, TooltipBox],
   imports: [IonicModule],
-  exports: [Tooltip],
-  providers: [
-    TooltipProvider
-  ]
+  exports: [Tooltip]
 })
-export class TooltipsModule {}
+export class TooltipsModule {
+  static forRoot(): ModuleWithProviders {
+    return {
+      ngModule: TooltipsModule,
+      providers: [TooltipController]
+    }
+  }
+}
