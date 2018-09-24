@@ -18,7 +18,11 @@ export class Tooltip implements OnDestroy {
 
   @Input() positionH: string;
 
-  @Input() event: 'press' | 'click' | 'hover' = 'click';
+  @Input() event: 'press' | 'click' | 'hover';
+
+  @Input() mobileEvent: 'press' | 'click' = 'press';
+
+  @Input() desktopEvent: 'press' | 'click' | 'hover' = 'hover';
 
   @Input() topOffset: number;
 
@@ -71,6 +75,15 @@ export class Tooltip implements OnDestroy {
   ngAfterViewInit() {
     if (this._active) {
       this.trigger();
+    }
+  }
+
+  /**
+   * Set default event type by platform if event is not defined
+   */
+  ngOnInit() {
+    if (!this.event) {
+      this.event = this.platform.is('mobile') ? this.mobileEvent : this.desktopEvent;
     }
   }
 

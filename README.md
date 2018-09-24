@@ -108,8 +108,18 @@ The `tooltip` directive takes a string, which will be used as the tooltip text. 
 
 #### `event`
 
-(string) the event to show the tooltip on. Can be either `'hover'`, `'click'` or `'press'`. Defaults to `'press'`.  
+(string) the event to show the tooltip on. Can be either `'hover'`, `'click'` or `'press'`. Defaults to `'hover'` on desktop, `'press'` on mobile.  
 Note: `'hover'` only works on desktop.
+
+#### `desktopEvent`
+
+(string) the event to show the tooltip on when displayed on a desktop . Can be either `'hover'`, `'click'` or `'press'`. Defaults to `'hover'`.  
+Note: This only works when the `event` attribute is omitted.
+
+#### `mobileEvent`
+
+(string) the event to show the tooltip on when displayed on a mobile. Can be either `'click'` or `'press'`. Defaults to `'press'`.  
+Note: This only works when the `event` attribute is omitted.
 
 #### `arrow`
 
