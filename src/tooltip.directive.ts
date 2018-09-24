@@ -1,15 +1,24 @@
 import {
-  Directive, ElementRef, Input, ApplicationRef, ComponentFactoryResolver,
-  ViewContainerRef, ComponentRef, HostListener, OnDestroy
-} from '@angular/core';
+  AfterViewInit,
+  ApplicationRef,
+  ComponentFactoryResolver,
+  ComponentRef,
+  Directive,
+  ElementRef,
+  HostListener,
+  Input,
+  OnDestroy,
+  OnInit,
+  ViewContainerRef,
+}                   from '@angular/core';
 import { Platform } from 'ionic-angular';
 
 import { TooltipBox } from './tooltip-box.component';
 
 @Directive({
-  selector: '[tooltip]'
+  selector: '[tooltip]',
 })
-export class Tooltip implements OnDestroy {
+export class Tooltip implements OnInit, AfterViewInit, OnDestroy {
 
 
   @Input() tooltip: string;
@@ -32,6 +41,7 @@ export class Tooltip implements OnDestroy {
   set navTooltip(val: boolean) {
     this._navTooltip = typeof val !== 'boolean' || val !== false;
   }
+
   get navTooltip(): boolean {
     return this._navTooltip;
   }
@@ -40,6 +50,7 @@ export class Tooltip implements OnDestroy {
   set arrow(val: boolean) {
     this._arrow = typeof val !== 'boolean' || val !== false;
   }
+
   get arrow(): boolean {
     return this._arrow;
   }
@@ -51,6 +62,7 @@ export class Tooltip implements OnDestroy {
     this._active = typeof val !== 'boolean' || val !== false;
     this._active ? this.canShow && this.showTooltip() : this._removeTooltip();
   }
+
   get active(): boolean {
     return this._active;
   }
@@ -66,22 +78,19 @@ export class Tooltip implements OnDestroy {
     private el: ElementRef,
     private appRef: ApplicationRef,
     private platform: Platform,
-    private _componentFactoryResolver: ComponentFactoryResolver
-  ) {}
+    private _componentFactoryResolver: ComponentFactoryResolver,
+  ) {
+  }
 
-  /**
-   * Show the tooltip immediately after initiating view if set to
-   */
   ngAfterViewInit() {
+    // Show the tooltip immediately after initiating view if set to
     if (this._active) {
       this.trigger();
     }
   }
 
-  /**
-   * Set default event type by platform if event is not defined
-   */
   ngOnInit() {
+    // Set default event type by platform if event is not defined
     if (!this.event) {
       this.event = this.platform.is('mobile') ? this.mobileEvent : this.desktopEvent;
     }
@@ -107,7 +116,9 @@ export class Tooltip implements OnDestroy {
    * If a tooltip already exists, it will just reset it's timer.
    */
   trigger() {
-    if (!this.canShow) return;
+    if (!this.canShow) {
+      return;
+    }
 
     if (this.tooltipElement) {
       this._resetTimer();
@@ -150,7 +161,7 @@ export class Tooltip implements OnDestroy {
       if (!this._active) {
         this.tooltipTimeout = setTimeout(
           this._removeTooltip.bind(this),
-          this.duration
+          this.duration,
         );
       }
     });
@@ -158,29 +169,37 @@ export class Tooltip implements OnDestroy {
 
   @HostListener('click')
   onClick(): void {
-    if (this.event === 'click') this.trigger();
+    if (this.event === 'click') {
+      this.trigger();
+    }
   }
 
   @HostListener('press')
   onPress(): void {
-    if (this.event === 'press') this.trigger();
+    if (this.event === 'press') {
+      this.trigger();
+    }
   }
 
   @HostListener('mouseenter')
   onMouseEnter(): void {
-    if (this.event === 'hover') this.active = true;
+    if (this.event === 'hover') {
+      this.active = true;
+    }
   }
 
   @HostListener('mouseleave')
   onMouseLeave(): void {
-    if (this.event === 'hover') this.active = false;
+    if (this.event === 'hover') {
+      this.active = false;
+    }
   }
 
   private _createTooltipComponent() {
     let viewport: ViewContainerRef = (<any>this.appRef.components[0])._component
         ._viewport,
       componentFactory = this._componentFactoryResolver.resolveComponentFactory(
-        TooltipBox
+        TooltipBox,
       );
 
     this.tooltipElement = viewport.createComponent(componentFactory);
@@ -220,8 +239,12 @@ export class Tooltip implements OnDestroy {
         rect.top + el.offsetHeight / 2 - tooltipNativeElement.offsetHeight / 2;
     }
 
-    if(+this.topOffset) positionTop += +this.topOffset;
-    if(+this.leftOffset) positionLeft += +this.leftOffset;
+    if (+this.topOffset) {
+      positionTop += +this.topOffset;
+    }
+    if (+this.leftOffset) {
+      positionLeft += +this.leftOffset;
+    }
 
     if (
       positionLeft + tooltipNativeElement.offsetWidth + spacing >
@@ -241,7 +264,7 @@ export class Tooltip implements OnDestroy {
 
     return {
       left: positionLeft,
-      top: positionTop
+      top: positionTop,
     };
   }
 
@@ -261,8 +284,9 @@ export class Tooltip implements OnDestroy {
       if (
         this.tooltipElement &&
         typeof this.tooltipElement.destroy === 'function'
-      )
+      ) {
         this.tooltipElement.destroy();
+      }
       this.tooltipElement = this.tooltipTimeout = undefined;
       this.canShow = true;
     }, 300);
@@ -274,6 +298,7 @@ export class Tooltip implements OnDestroy {
       this.active = false;
     }, this.duration);
   }
+
   ngOnDestroy() {
     // if the timer hasn't expired or active is true when the component gets destroyed, the tooltip will remain in the DOM
     // this removes it
