@@ -16,6 +16,6 @@ export class TooltipsModule {
     return {
       ngModule: TooltipsModule,
       providers: [TooltipController]
-    }
+    };
   }
 }
