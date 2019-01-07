@@ -1,3 +1,9 @@
+<a name="3.0.0"></a>
+# [3.0.0](https://github.com/zyra/ionic-tooltips/compare/v2.2.0...v3.0.0) (2019-01-07)
+
+
+
+<a name="2.2.0"></a>
 # [2.2.0](https://github.com/zyra/ionic-tooltips/compare/v2.1.1...v2.2.0) (2019-01-07)
 
 
@@ -12,10 +18,12 @@
 
 
 
+<a name="2.1.1"></a>
 ## [2.1.1](https://github.com/zyra/ionic-tooltips/compare/v2.1.0...v2.1.1) (2018-09-24)
 
 
 
+<a name="2.1.0"></a>
 # [2.1.0](https://github.com/zyra/ionic-tooltips/compare/v2.0.0...v2.1.0) (2018-09-24)
 
 
@@ -34,6 +42,7 @@
 
 
 
+<a name="2.0.0"></a>
 # [2.0.0](https://github.com/zyra/ionic-tooltips/compare/v1.0.0...v2.0.0) (2017-09-11)
 
 
@@ -50,6 +59,7 @@
 
 
 
+<a name="1.0.0"></a>
 # 1.0.0 (2017-07-05)
 
 
