@@ -88,10 +88,6 @@ export class TooltipBox implements AfterViewInit {
     });
   }
 
-  ngOnInit() {
-    console.log('im a tooltip cmp', { ...this });
-  }
-
   ngAfterViewInit() {
     this.initResolve();
   }
