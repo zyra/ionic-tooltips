@@ -113,7 +113,7 @@ export class Tooltip implements OnInit, AfterViewInit, OnDestroy {
    * @return {boolean} TRUE if the tooltip can be shown
    */
   get canShow(): boolean {
-    return this._canShow && this.tooltip !== '';
+    return this._canShow && ((typeof this.tooltip === 'string' && this.tooltip !== '') || (typeof this.tooltipHtml === 'string' && this.tooltipHtml !== ''));
   }
 
   /**
@@ -141,7 +141,7 @@ export class Tooltip implements OnInit, AfterViewInit, OnDestroy {
     const tooltipComponent: TooltipBox = this.tooltipElement.instance;
 
     tooltipComponent.text = this.tooltip;
-    tooltipComponent.html = this.tooltipHtml;
+    tooltipComponent.tooltipHtml = this.tooltipHtml;
     tooltipComponent.init.then(() => {
       const tooltipPosition = this._getTooltipPosition();
 

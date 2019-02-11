@@ -12,7 +12,7 @@ import {
 @Component({
   selector: 'tooltip-box',
   template: `
-    <ng-container *ngIf="html; else txt" [innerHTML]="html"></ng-container>
+    <div *ngIf="tooltipHtml; else txt" [innerHTML]="tooltipHtml"></div>
     <ng-template #txt>{{ text }}</ng-template>
   `,
   animations: [
@@ -53,7 +53,7 @@ export class TooltipBox implements AfterViewInit {
   @HostBinding('@fade') fadeState: string = 'invisible';
 
   @Input() text: string;
-  @Input() html: string;
+  @Input() tooltipHtml: string;
 
   @Input()
   set arrow(side: string) {
@@ -86,6 +86,10 @@ export class TooltipBox implements AfterViewInit {
     this.init = new Promise<void>(resolve => {
       this.initResolve = resolve;
     });
+  }
+
+  ngOnInit() {
+    console.log('im a tooltip cmp', { ...this });
   }
 
   ngAfterViewInit() {
