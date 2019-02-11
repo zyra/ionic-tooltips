@@ -92,7 +92,10 @@ Now you're ready to use this module. See information below for usage.
 
 ## Usage
 
-The `tooltip` directive takes a string, which will be used as the tooltip text. When using the `tooltip` directive, you can also use the following inputs:
+The `tooltip` directive takes a string, which will be used as the tooltip text. To use HTML in your tooltip, you need to pass the content through the `[tooltipHtml]` directive documented below. When using the `tooltip` directive, you can also use the following inputs:
+
+#### `tooltipHtml`
+(string) specifies HTML to use inside the tooltip. This will override any value you passed with the `[tooltip]` directive (if any was provided).
 
 #### `navTooltip`
 

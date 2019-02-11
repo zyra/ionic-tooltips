@@ -21,6 +21,7 @@ import { TooltipController } from './tooltip.cotroller';
 })
 export class Tooltip implements OnInit, AfterViewInit, OnDestroy {
 
+  @Input() tooltipHtml: string;
 
   @Input() tooltip: string;
 
@@ -140,6 +141,7 @@ export class Tooltip implements OnInit, AfterViewInit, OnDestroy {
     const tooltipComponent: TooltipBox = this.tooltipElement.instance;
 
     tooltipComponent.text = this.tooltip;
+    tooltipComponent.html = this.tooltipHtml;
     tooltipComponent.init.then(() => {
       const tooltipPosition = this._getTooltipPosition();
 

@@ -56,7 +56,7 @@ describe('Tooltip', () => {
       imports: [
         IonicModule.forRoot(TestPage), // to be able to inject Platform
         BrowserAnimationsModule, // needed for TooltipsModule
-        TooltipsModule
+        TooltipsModule.forRoot(),
       ]
     }).compileComponents();
   }));
