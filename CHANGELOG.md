@@ -1,3 +1,13 @@
+<a name="3.1.0"></a>
+# [3.1.0](https://github.com/zyra/ionic-tooltips/compare/v3.0.0...v3.1.0) (2019-02-11)
+
+
+### Features
+
+* allow html input ([9418e94](https://github.com/zyra/ionic-tooltips/commit/9418e94)), closes [#15](https://github.com/zyra/ionic-tooltips/issues/15)
+
+
+
 <a name="3.0.0"></a>
 # [3.0.0](https://github.com/zyra/ionic-tooltips/compare/v2.2.0...v3.0.0) (2019-01-07)
 
@@ -29,10 +39,10 @@
 
 ### Bug Fixes
 
+* fix ngc ([cca9cad](https://github.com/zyra/ionic-tooltips/commit/cca9cad))
 * **lib:** resetTimer ([#32](https://github.com/zyra/ionic-tooltips/issues/32)) ([2fcc655](https://github.com/zyra/ionic-tooltips/commit/2fcc655))
 * **tooltip:** prevent error caused by an undefined value ([4d16bd3](https://github.com/zyra/ionic-tooltips/commit/4d16bd3))
 * **tooltip:** remove tooltips when element destroyed with event='hover' ([#33](https://github.com/zyra/ionic-tooltips/issues/33)) ([310d968](https://github.com/zyra/ionic-tooltips/commit/310d968))
-* fix ngc ([cca9cad](https://github.com/zyra/ionic-tooltips/commit/cca9cad))
 
 
 ### Features
