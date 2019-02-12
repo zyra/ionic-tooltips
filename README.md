@@ -47,19 +47,13 @@ And here's another example to show a tooltip below a nav button:
 
 ## Installation
 
-1.  Make sure you have `@angular/animations` installed. If you don't have it, run the following command to install it:
-
-```shell
-npm i --save-exact @angular/animations@5
-```
-
-2.  Install this module by running the following command:
+1.  Install this module by running the following command:
 
 ```shell
 npm i ionic-tooltips
 ```
 
-3.  Import `TooltipsModule` in your `@NgModule`. If you are using lazy module loading, then you need to import it in the modules where it's used.
+2.  Import `TooltipsModule` in your `@NgModule`. If you are using lazy module loading, then you need to import it in the modules where it's used.
 
 ```ts
 import { TooltipsModule } from 'ionic-tooltips';
@@ -74,7 +68,7 @@ import { TooltipsModule } from 'ionic-tooltips';
 export class MyModule { ... }
 ```
 
-4.  Import `BrowserAnimationsModule` in your app's main `@NgModule`.
+3.  Import `BrowserAnimationsModule` in your app's main `@NgModule`.
 
 ```ts
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';

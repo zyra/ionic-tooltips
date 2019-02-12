@@ -8,10 +8,10 @@ import {
 } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { IonicModule } from 'ionic-angular';
+import { IonicModule } from '@ionic/angular';
 
 import { TooltipBox } from './tooltip-box.component';
-import { Tooltip } from './tooltip.directive';
+import { TooltipDirective } from './tooltip.directive';
 import { TooltipsModule } from './tooltips.module';
 
 @Component({
@@ -22,9 +22,9 @@ import { TooltipsModule } from './tooltips.module';
 class TestPage implements AfterViewInit {
   @ViewChild('btn') button: ElementRef;
 
-  @ViewChild(Tooltip) tooltip: Tooltip;
+  @ViewChild(TooltipDirective) tooltip: TooltipDirective;
 
-  active: boolean = false;
+  active = false;
 
   constructor(public _viewport: ViewContainerRef) {}
 
@@ -32,7 +32,7 @@ class TestPage implements AfterViewInit {
     return this.button.nativeElement;
   }
 
-  getTooltip(): Tooltip {
+  getTooltip(): TooltipDirective {
     return this.tooltip;
   }
 
@@ -54,7 +54,7 @@ describe('Tooltip', () => {
     TestBed.configureTestingModule({
       declarations: [TestPage],
       imports: [
-        IonicModule.forRoot(TestPage), // to be able to inject Platform
+        IonicModule.forRoot(), // to be able to inject Platform
         BrowserAnimationsModule, // needed for TooltipsModule
         TooltipsModule.forRoot(),
       ]

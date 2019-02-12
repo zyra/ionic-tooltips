@@ -1,0 +1,13 @@
+{
+  "name": "ionic-tooltips",
+  "version": "4.0.0",
+  "description": "Tooltips module for Ionic 4 apps",
+  "author": "Ibby Hadeed <ibby@zyra.ca>",
+  "license": "MIT",
+  "repository": "",
+  "peerDependencies": {
+    "@angular/common": "^7.0.0",
+    "@angular/core": "^7.0.0",
+    "@ionic/angular": "*"
+  }
+}
