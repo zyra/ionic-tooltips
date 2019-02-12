@@ -31,6 +31,7 @@ import {
               position: fixed;
               padding: 15px 25px;
               font-size: 15px;
+              z-index: 3;
           }
     `,
       `
@@ -50,7 +51,7 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TooltipBox implements AfterViewInit {
-  @HostBinding('@fade') fadeState: string = 'invisible';
+  @HostBinding('@fade') fadeState = 'invisible';
 
   @Input() text: string;
   @Input() tooltipHtml: string;
@@ -74,10 +75,6 @@ export class TooltipBox implements AfterViewInit {
     this.rnd.setStyle(this.getNativeElement(), 'left', val + 'px');
   }
 
-  getNativeElement(): HTMLElement {
-    return this.elementRef.nativeElement;
-  }
-
   init: Promise<void>;
 
   private initResolve: Function;
@@ -86,6 +83,10 @@ export class TooltipBox implements AfterViewInit {
     this.init = new Promise<void>(resolve => {
       this.initResolve = resolve;
     });
+  }
+
+  getNativeElement(): HTMLElement {
+    return this.elementRef.nativeElement;
   }
 
   ngAfterViewInit() {

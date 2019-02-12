@@ -1,0 +1,61 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>
+      Tooltips Demo
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button tooltip="Call" navTooltip [event]="tooltipEvent" [duration]="duration">
+        <ion-icon slot="icon-only" name="call" color="light"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-item>
+    <ion-label>Show arrow</ion-label>
+    <ion-toggle mode="ios" [(ngModel)]="showArrow"></ion-toggle>
+  </ion-item>
+  <ion-item>
+    <ion-label>
+      Show tooltip on
+    </ion-label>
+    <ion-select [(ngModel)]="tooltipEvent">
+      <ion-select-option value="click">Click</ion-select-option>
+      <ion-select-option value="press">Press</ion-select-option>
+    </ion-select>
+  </ion-item>
+  <ion-item-divider color="light">
+    Duration
+    <ion-note color="primary" slot="end">
+      {{ duration + 'ms' }}
+    </ion-note>
+  </ion-item-divider>
+  <ion-item>
+    <ion-range [(ngModel)]="duration" [min]="1000" [max]="10000" [step]="1000" [pin]="true" [snaps]="true"></ion-range>
+  </ion-item>
+
+  <div padding>
+    <ion-button margin-top mode="ios" expand="block" tooltip tooltipHtml="I'm a multi-line<br> HTML tooltip" positionV="top" [arrow]="showArrow" [event]="tooltipEvent" [duration]="duration">
+      Top tooltip
+    </ion-button>
+
+    <p text-right>
+      <ion-button mode="ios" tooltip="I'm a beautiful tooltip" positionH="left" [arrow]="showArrow" [event]="tooltipEvent" [duration]="duration">
+        Left tooltip
+      </ion-button>
+    </p>
+
+    <p>
+      <ion-button mode="ios" tooltip="I'm a beautiful tooltip" positionH="right" [arrow]="showArrow" [event]="tooltipEvent" [duration]="duration">
+        Right tooltip
+      </ion-button>
+    </p>
+
+    <ion-button mode="ios" expand="block" tooltip="I'm a beautiful tooltip" positionV="bottom" [arrow]="showArrow" [event]="tooltipEvent" [duration]="duration">
+      Bottom tooltip
+    </ion-button>
+  </div>
+
+</ion-content>

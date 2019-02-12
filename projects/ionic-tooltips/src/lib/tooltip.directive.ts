@@ -10,8 +10,8 @@ import {
   OnDestroy,
   OnInit,
   ViewContainerRef,
-}                   from '@angular/core';
-import { Platform } from 'ionic-angular';
+} from '@angular/core';
+import { Platform } from '@ionic/angular';
 
 import { TooltipBox } from './tooltip-box.component';
 import { TooltipController } from './tooltip.cotroller';
@@ -19,7 +19,7 @@ import { TooltipController } from './tooltip.cotroller';
 @Directive({
   selector: '[tooltip]',
 })
-export class Tooltip implements OnInit, AfterViewInit, OnDestroy {
+export class TooltipDirective implements OnInit, AfterViewInit, OnDestroy {
 
   @Input() tooltipHtml: string;
 
@@ -59,31 +59,32 @@ export class Tooltip implements OnInit, AfterViewInit, OnDestroy {
     return this._arrow;
   }
 
-  @Input() duration: number = 3000;
+  @Input() duration = 3000;
 
   @Input()
   set active(val: boolean) {
     this._active = typeof val !== 'boolean' || val !== false;
-    this._active ? this.canShow && this.showTooltip() : this.removeTooltip();
+    this._active && this.canShow ? this.showTooltip() : this.removeTooltip();
   }
 
   get active(): boolean {
     return this._active;
   }
 
-  private _arrow: boolean = false;
-  private _navTooltip: boolean = false;
+  private _arrow = false;
+  private _navTooltip = false;
   private tooltipElement: ComponentRef<TooltipBox>;
   private tooltipTimeout: any;
-  private _canShow: boolean = true;
-  private _active: boolean = false;
+  private _canShow = true;
+  private _active = false;
 
   constructor(
     private el: ElementRef,
     private appRef: ApplicationRef,
     private platform: Platform,
-    private _componentFactoryResolver: ComponentFactoryResolver,
-    private tooltipCtrl: TooltipController
+    private cfr: ComponentFactoryResolver,
+    private tooltipCtrl: TooltipController,
+    private vcr: ViewContainerRef,
   ) {
   }
 
@@ -113,7 +114,9 @@ export class Tooltip implements OnInit, AfterViewInit, OnDestroy {
    * @return {boolean} TRUE if the tooltip can be shown
    */
   get canShow(): boolean {
-    return this._canShow && ((typeof this.tooltip === 'string' && this.tooltip !== '') || (typeof this.tooltipHtml === 'string' && this.tooltipHtml !== ''));
+    return this._canShow &&
+      ((typeof this.tooltip === 'string' && this.tooltip !== '')
+        || (typeof this.tooltipHtml === 'string' && this.tooltipHtml !== ''));
   }
 
   /**
@@ -202,13 +205,8 @@ export class Tooltip implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private _createTooltipComponent() {
-    let viewport: ViewContainerRef = (<any>this.appRef.components[0])._component
-        ._viewport,
-      componentFactory = this._componentFactoryResolver.resolveComponentFactory(
-        TooltipBox,
-      );
-
-    this.tooltipElement = viewport.createComponent(componentFactory);
+    const componentFactory = this.cfr.resolveComponentFactory(TooltipBox);
+    this.tooltipElement = this.vcr.createComponent(componentFactory);
     this.tooltipCtrl.addTooltip(this);
   }
 
@@ -219,7 +217,7 @@ export class Tooltip implements OnInit, AfterViewInit, OnDestroy {
 
     let positionLeft: number,
       positionTop: number,
-      spacing: number = 10;
+      spacing = 10;
 
     if (this.navTooltip) {
       this.positionV = 'bottom';
@@ -231,19 +229,20 @@ export class Tooltip implements OnInit, AfterViewInit, OnDestroy {
       positionLeft = rect.right + spacing;
     } else if (this.positionH === 'left') {
       positionLeft = rect.left - spacing - tooltipNativeElement.offsetWidth;
+      // -79, 19
     } else if (this.navTooltip) {
       positionLeft = rect.left + el.offsetWidth / 2;
     } else {
       positionLeft = rect.left;
     }
 
+
     if (this.positionV === 'top') {
       positionTop = rect.top - spacing - tooltipNativeElement.offsetHeight;
     } else if (this.positionV === 'bottom') {
       positionTop = rect.bottom + spacing;
     } else {
-      positionTop =
-        rect.top + el.offsetHeight / 2 - tooltipNativeElement.offsetHeight / 2;
+      positionTop = rect.top + el.offsetHeight / 2 - tooltipNativeElement.offsetHeight / 2;
     }
 
     if (+this.topOffset) {
@@ -253,12 +252,8 @@ export class Tooltip implements OnInit, AfterViewInit, OnDestroy {
       positionLeft += +this.leftOffset;
     }
 
-    if (
-      positionLeft + tooltipNativeElement.offsetWidth + spacing >
-      this.platform.width()
-    ) {
-      positionLeft =
-        this.platform.width() - tooltipNativeElement.offsetWidth - spacing;
+    if (positionLeft + tooltipNativeElement.offsetWidth + spacing > this.platform.width()) {
+      positionLeft = this.platform.width() - tooltipNativeElement.offsetWidth - spacing;
     } else if (positionLeft + tooltipNativeElement.offsetWidth - spacing < 0) {
       positionLeft = spacing;
     }
@@ -275,7 +270,7 @@ export class Tooltip implements OnInit, AfterViewInit, OnDestroy {
     };
   }
 
-   removeTooltip() {
+  removeTooltip() {
     if (!this.tooltipElement) {
       this.tooltipElement = undefined;
       this.tooltipTimeout = undefined;
