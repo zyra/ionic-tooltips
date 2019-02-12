@@ -1,6 +1,6 @@
 {
   "name": "ionic-tooltips",
-  "version": "4.0.0",
+  "version": "4.0.0-beta.0",
   "description": "Tooltips module for Ionic 4 apps",
   "author": "Ibby Hadeed <ibby@zyra.ca>",
   "license": "MIT",
