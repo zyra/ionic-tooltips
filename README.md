@@ -7,7 +7,7 @@ Tooltips module for apps built with Ionic Framework.
 
 ## Compatibility
 
-This module is designed to work with `ionic-angular@^3.9.2` but it should work with any version above `2.0.0` as it doesn't heavily depend on the Ionic Framework.
+Versions above 4.0.0 support Ionic 4 only. For older versions please use the `ionic3` branch.
 
 ## Demo
 
@@ -50,7 +50,7 @@ And here's another example to show a tooltip below a nav button:
 1.  Install this module by running the following command:
 
 ```shell
-npm i ionic-tooltips
+npm i ionic-tooltips@beta
 ```
 
 2.  Import `TooltipsModule` in your `@NgModule`. If you are using lazy module loading, then you need to import it in the modules where it's used.
