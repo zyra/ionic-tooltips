@@ -1,4 +1,8 @@
 # Ionic Tooltips
+
+> [!WARNING]
+> This package is deprecated and no longer maintained. For current Ionic applications, use Ionic's [`ion-popover`](https://ionicframework.com/docs/api/popover) or another maintained, accessible tooltip solution. The source remains available for historical reference, but no fixes or support will be provided.
+
 [![npm](https://img.shields.io/npm/l/ionic-tooltips.svg)](https://www.npmjs.com/package/ionic-tooltips/)
 [![npm](https://img.shields.io/npm/dt/ionic-tooltips.svg)](https://www.npmjs.com/package/ionic-tooltips)
 [![npm](https://img.shields.io/npm/dm/ionic-tooltips.svg)](https://www.npmjs.com/package/ionic-tooltips)
